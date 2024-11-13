@@ -36,7 +36,6 @@ ssh_marginalcontri = \(formula, data, overlay = 'and', cores = 1){
   yname = formula.vars[1]
   xname = colnames(data)[-which(colnames(data) == yname)]
   xs = sdsfun::generate_subsets(xname,empty = FALSE, self = TRUE)
-  spfom = overlay
 
   pd_mc = \(formula, discdata, overlaymethod = 'and'){
     formula = stats::as.formula(formula)
@@ -56,8 +55,8 @@ ssh_marginalcontri = \(formula, data, overlay = 'and', cores = 1){
     return(qtheta)
   }
 
-  calcul_pd = \(.x,dti){
-    qv = pd_mc(paste(yname,'~',paste0(.x,collapse = '+')),dti,spfom)
+  calcul_pd = \(.x,dti,overlay){
+    qv = pd_mc(paste(yname,'~',paste0(.x,collapse = '+')),dti,overlay)
     names(qv) = "pd"
     return(qv)
   }
@@ -70,8 +69,8 @@ ssh_marginalcontri = \(formula, data, overlay = 'and', cores = 1){
   }
 
   if (doclust) {
-    parallel::clusterExport(cores)
-    out_pdv = parallel::parLapply(cores, xs, calcul_pd, dti = data)
+    out_pdv = parallel::parLapply(cores, xs, calcul_pd,
+                                  dti = data, overlay = overlay)
     out_pdv = tibble::as_tibble(do.call(rbind, out_pdv))
   } else {
     out_pdv = purrr::map_dfr(xs, calcul_pd, dti = data)
@@ -111,7 +110,6 @@ ssh_marginalcontri = \(formula, data, overlay = 'and', cores = 1){
   }
 
   if (doclust) {
-    parallel::clusterExport(cores)
     out_g = parallel::parLapply(cores,xname,calcul_shap)
     out_g = tibble::as_tibble(do.call(rbind, out_g))
   } else {
