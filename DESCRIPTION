@@ -16,6 +16,10 @@ License: GPL-3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
+URL: https://ausgis.github.io/cisp/, https://github.com/ausgis/cisp
+BugReports: https://github.com/ausgis/cisp/issues
+Depends: 
+    R (>= 4.1.0)
 Imports: 
     dplyr,
     magrittr,
