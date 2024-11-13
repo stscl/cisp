@@ -22,6 +22,8 @@ Depends:
     R (>= 4.1.0)
 Imports: 
     dplyr,
+    forcats,
+    ggplot2,
     magrittr,
     parallel,
     purrr,
