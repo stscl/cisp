@@ -19,7 +19,7 @@
 #' @examples
 #' \dontrun{
 #' ## The following code needs to configure the Python environment to run:
-#' sim1 = gdverse::sim
+#' sim1 = sf::st_as_sf(gdverse::sim,coords = c('lo','la'))
 #' g = spc(sim1, discnum = 3:6, cores = 1)
 #' g
 #' }
@@ -39,8 +39,8 @@ spc = \(data, overlay = 'and', discnum = 3:8, minsize = 1,
                                 overlay = overlay, cores = cores)
     return(sshmcv$spd)
   }
-  res = purrr::map(xsname,calcul_spcv,overlay = overlay,discnum = discnum,
-                   minsize = minsize, strategy = strategy,
+  res = purrr::map(xsname,calcul_spcv,data = data,overlay = overlay,
+                   discnum = discnum,minsize = minsize,strategy = strategy,
                    increase_rate = increase_rate, cores = cores)
   names(res) = xsname
   return(res)
