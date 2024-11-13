@@ -171,6 +171,5 @@ ssh_marginalcontri = \(formula, data, overlay = 'and', cores = 1){
 #'
 print.sshmc_result = \(x, ...) {
   cat("***   Marginal Contributions From SSH     ")
-  cat("\n")
-  print(as.data.frame(x$spd))
+  print(knitr::kable(x$spd, format = "markdown", digits = 12, align = 'c', ...))
 }
