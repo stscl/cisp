@@ -44,6 +44,8 @@ spc = \(data, overlay = 'and', discnum = 3:8, minsize = 1,
                               discnum = discnum,minsize = minsize,strategy = strategy,
                               increase_rate = increase_rate, cores = cores) |>
                      dplyr::mutate(yv = .x) |>
-                     dplyr::rename(xv = variable))
+                     dplyr::rename(xv = variable,
+                                   correlation = spd) |>
+                     dplyr::select(yv,dplyr::everything()))
   return(res)
 }
