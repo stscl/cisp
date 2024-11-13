@@ -1,5 +1,5 @@
 Package: cisp
-Title: What the Package Does (One Line, Title Case)
+Title: A Correlation Indicator Based On Spatial Patterns 
 Version: 0.0.0.9000
 Authors@R: 
     person("Wenbo", "Lv", , "lyu.geosocial@gmail.com", role = c("aut", "cre"),
