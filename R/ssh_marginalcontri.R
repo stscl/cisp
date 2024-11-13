@@ -54,7 +54,7 @@ ssh_marginalcontri = \(formula, data, overlay = 'and', cores = 1){
   xs = generate_subsets(xname,empty = FALSE, self = TRUE)
   spfom = overlay
 
-  rpd_isp = \(formula, discdata, overlaymethod = 'and'){
+  rpd_mc = \(formula, discdata, overlaymethod = 'and'){
     formula = stats::as.formula(formula)
     formula.vars = all.vars(formula)
     if (formula.vars[2] != "."){
@@ -68,8 +68,7 @@ ssh_marginalcontri = \(formula, data, overlay = 'and', cores = 1){
     } else {
       fuzzyzone = sdsfun::fuzzyoverlay(formula,discdata,overlaymethod)
     }
-    gd_fd = factor_detector(discdata[,yname,drop = TRUE],fuzzyzone)
-    qtheta = tibble::tibble(rpd = gd_fd[[1]],qv = gd_fd[[2]])
+    qtheta = sdsfun::geodetector_q(discdata[,yname,drop = TRUE],fuzzyzone)
     return(qtheta)
   }
 
