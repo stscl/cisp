@@ -18,6 +18,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-cyan.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![cran](https://www.r-pkg.org/badges/version/cisp)](https://CRAN.R-project.org/package=cisp)
+[![r-universe](https://ausgis.r-universe.dev/badges/cisp?color=cyan)](https://ausgis.r-universe.dev/cisp)
 <!-- badges: end -->
 
 **A Correlation Indicator Based On Spatial Patterns**
