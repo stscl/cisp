@@ -7,12 +7,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "##"
-)
-```
+
 
 ## Install and load R packages
 
@@ -25,7 +20,7 @@ devtools::install_github("ausgis/cisp",
                          dep = TRUE)
 ```
 
-```{r loadrpkg}
+```r
 library(cisp)
 ```
 
@@ -33,17 +28,72 @@ library(cisp)
 
 Using the same data as [the gdverse idsa vignette](https://stscl.github.io/gdverse/articles/idsa.html):
 
-```{r load_data}
+
+``` r
 depression = system.file('extdata/Depression.csv',package = 'gdverse') |>
   readr::read_csv() |>
   sf::st_as_sf(coords = c('X','Y'), crs = 4326)
+## Rows: 1072 Columns: 13
+## ── Column specification ───────────────────────────────────────────────────────────────────────────
+## Delimiter: ","
+## dbl (13): X, Y, Depression_prevelence, PopulationDensity, Population65, NoHealthInsurance, Neig...
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 depression
+## Simple feature collection with 1072 features and 11 fields
+## Geometry type: POINT
+## Dimension:     XY
+## Bounding box:  xmin: -83.1795 ymin: 32.11464 xmax: -78.6023 ymax: 35.17354
+## Geodetic CRS:  WGS 84
+## # A tibble: 1,072 × 12
+##    Depression_prevelence PopulationDensity Population65 NoHealthInsurance Neighbor_Disadvantage
+##  *                 <dbl>             <dbl>        <dbl>             <dbl>                 <dbl>
+##  1                  23.1              61.5         22.5              7.98               -0.0525
+##  2                  22.8              58.3         16.8             11.0                -0.254 
+##  3                  23.2              35.9         24.5              9.31               -0.0540
+##  4                  21.8              76.1         21.8             13.2                 0.0731
+##  5                  20.7              47.3         22.0             11                   0.763 
+##  6                  21.3              32.5         19.2             13.0                 0.422 
+##  7                  22                36.9         19.2             10.8                 0.113 
+##  8                  21.2              61.5         15.9              8.57               -0.154 
+##  9                  22.7              67.2         15.7             17.8                -0.320 
+## 10                  20.6             254.          11.3             12.7                 0.457 
+## # ℹ 1,062 more rows
+## # ℹ 7 more variables: Beer <dbl>, MentalHealthPati <dbl>, NatureParks <dbl>, Casinos <dbl>,
+## #   DrinkingPlaces <dbl>, X.HouseRent <dbl>, geometry <POINT [°]>
 ```
 
-```{r g,fig.width=8.55,fig.height=4.05,fig.cap=knitr::asis_output("**Figure 1**. Results of Spatial pattern correlation")}
+
+``` r
 system.time({
-  g = spc(depression,cores = 12)
+  g = cisp::spc(depression,cores = 12)
 })
+## Error in `map()`:
+## ℹ In index: 1.
+## Caused by error in `parallel::clusterExport()`:
+## ! argument "varlist" is missing, with no default
+## Timing stopped at: 0.41 0.05 175.2
 g
+## ***   Spatial Pattern Correlation    
+## 
+## | yv | xv | correlation  |
+## |:--:|:--:|:------------:|
+## | y  | xc | 0.082714411  |
+## | y  | xb | 0.055315842  |
+## | y  | xa | 0.042960555  |
+## | xa | xc | 0.234800659  |
+## | xa | xb | 0.021596576  |
+## | xa | y  | -0.005880822 |
+## | xb | xc | 0.092868735  |
+## | xb | y  | 0.033110354  |
+## | xb | xa | 0.007082261  |
+## | xc | xa | 0.113730996  |
+## | xc | xb | 0.048312694  |
+## | xc | y  | 0.036668224  |
 plot(g)
+## Warning: `guide_colourbar()` cannot be used for edge_colour.
+## ℹ Use one of colour, color, or fill instead.
 ```
+
+![**Figure 1**. Results of Spatial pattern correlation](figure/g-1.png)

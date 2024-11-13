@@ -1,0 +1,50 @@
+---
+title: "A correlation indicator based on spatial patterns"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{cisp}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  fig.path = "man/figures/cisp/",
+  fig.dpi = 150
+)
+```
+
+## Install and load R packages
+
+```r
+if (!requireNamespace("devtools")) {
+    install.packages("devtools")
+}
+devtools::install_github("ausgis/cisp",
+                         build_vignettes = TRUE,
+                         dep = TRUE)
+```
+
+```r
+library(cisp)
+```
+
+## Spatial pattern correlation
+
+Using the same data as [the gdverse idsa vignette](https://stscl.github.io/gdverse/articles/idsa.html):
+
+```{r load_data}
+depression = system.file('extdata/Depression.csv',package = 'gdverse') |>
+  readr::read_csv() |>
+  sf::st_as_sf(coords = c('X','Y'), crs = 4326)
+depression
+```
+
+```{r g,fig.width=8.55,fig.height=4.05,fig.cap=knitr::asis_output("**Figure 1**. Results of Spatial pattern correlation")}
+system.time({
+  g = cisp::spc(depression,cores = 12)
+})
+g
+plot(g)
+```
