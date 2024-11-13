@@ -29,6 +29,8 @@ Imports:
     forcats,
     gdverse,
     ggplot2,
+    ggraph,
+    igraph,
     magrittr,
     parallel,
     purrr,
