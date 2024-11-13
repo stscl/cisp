@@ -54,3 +54,12 @@ spc = \(data, overlay = 'and', discnum = 3:8, minsize = 1,
   class(res) = 'spc_result'
   return(res)
 }
+
+#' @title print spc result
+#' @export
+#' @noRd
+#'
+print.spc_result = \(x, ...) {
+  cat("***   Spatial Pattern Correlation    ")
+  print(knitr::kable(x$correlation, format = "markdown", digits = 12, align = 'c', ...))
+}

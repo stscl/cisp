@@ -36,6 +36,9 @@ multi-core parallel computing.}
 }
 \value{
 A list.
+\describe{
+\item{\code{correlation}}{power of spatial pattern correlation}
+}
 }
 \description{
 spatial pattern correlation
@@ -43,7 +46,7 @@ spatial pattern correlation
 \examples{
 \dontrun{
 ## The following code needs to configure the Python environment to run:
-sim1 = gdverse::sim
+sim1 = sf::st_as_sf(gdverse::sim,coords = c('lo','la'))
 g = spc(sim1, discnum = 3:6, cores = 1)
 g
 }
