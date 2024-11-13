@@ -69,15 +69,17 @@ print.spc_result = \(x, ...) {
 #' @noRd
 #'
 plot.spc_result = \(x, ...) {
-  g = igraph::graph_from_data_frame(data, directed = TRUE)
+  g = igraph::graph_from_data_frame(x$correlation, directed = TRUE)
   fig_g = ggraph::ggraph(g, layout = "circle") +
-    ggraph::geom_edge_arc(ggplot2::aes(width = abs(spd), color = spd),
+    ggraph::geom_edge_arc(ggplot2::aes(width = abs(correlation), color = correlation),
                           arrow = grid::arrow(type = "closed", length = grid::unit(3, "mm")),
                           end_cap = ggraph::circle(3, 'mm')) +
     ggraph::geom_node_point(size = 5) +
     ggraph::geom_node_text(ggplot2::aes(label = name), repel = TRUE) +
-    ggplot2::scale_edge_color_gradient2(low = "blue", mid = "gray", high = "red", midpoint = 0) +
-    ggplot2::scale_edge_width(range = c(0.5, 2)) +
+    ggraph::scale_edge_color_gradient2(low = "blue", mid = "gray",
+                                       high = "red", midpoint = 0,
+                                       guide = "colorbar") +
+    ggraph::scale_edge_width(range = c(0.5, 2)) +
     ggplot2::theme_void() +
     ggplot2::theme(legend.position = "bottom") +
     ggplot2::labs(edge_color = "Strength", edge_width = "Intensity")
