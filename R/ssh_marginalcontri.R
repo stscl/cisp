@@ -192,14 +192,14 @@ plot.sshmc_result = \(x, low_color = "#6600CC",
                   yend = c(utils::tail(y, n = -1), NA))
   fig_p = ggplot2::ggplot(g,
                           ggplot2::aes(x = step, y = name)) +
-    ggplot2::geom_point(ggplot2::aes(col = rpd, size = rpd)) +
+    ggplot2::geom_point(ggplot2::aes(col = pd, size = pd)) +
     ggplot2::geom_segment(data = g_arrow1,
                           ggplot2::aes(x = x, y = y,
                                        xend = xend,
                                        yend = yend),
                           arrow = ggplot2::arrow(length = ggplot2::unit(0.3, "cm")),
                           color = "grey40", na.rm = TRUE) +
-    ggplot2::geom_point(data = dplyr::filter(g,rpd == max(g$rpd)),
+    ggplot2::geom_point(data = dplyr::filter(g,pd == max(g$pd)),
                         ggplot2::aes(x = step, y = name),
                         color = "red", shape = "*", size = 12.5) +
     ggplot2::scale_color_gradient(low = low_color, high = high_color) +
