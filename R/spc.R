@@ -39,9 +39,11 @@ spc = \(data, overlay = 'and', discnum = 3:8, minsize = 1,
                                 overlay = overlay, cores = cores)
     return(sshmcv$spd)
   }
-  res = purrr::map(xsname,calcul_spcv,data = data,overlay = overlay,
-                   discnum = discnum,minsize = minsize,strategy = strategy,
-                   increase_rate = increase_rate, cores = cores)
-  names(res) = xsname
+  res = purrr::map_dfr(xsname,
+                       \(.x) calcul_spcv(.x,data = data,overlay = overlay,
+                              discnum = discnum,minsize = minsize,strategy = strategy,
+                              increase_rate = increase_rate, cores = cores) |>
+                     dplyr::mutate(yv = .x) |>
+                     dplyr::rename(xv = variable))
   return(res)
 }
