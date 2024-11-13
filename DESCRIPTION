@@ -34,4 +34,6 @@ Suggests:
     gdverse,
     knitr,
     rmarkdown
+Remotes:
+    stscl/sdsfun
 VignetteBuilder: knitr
