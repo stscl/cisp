@@ -30,7 +30,7 @@ spatial association marginal contributions derived from spatial stratified heter
 }
 \examples{
 NTDs = sf::st_as_sf(gdverse::NTDs, coords = c('X','Y'))
-g = sesp(incidence ~ ., data = NTDs, cores = 1)
+g = ssh_marginalcontri(incidence ~ ., data = NTDs, cores = 1)
 g
 
 }

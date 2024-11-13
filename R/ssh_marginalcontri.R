@@ -17,7 +17,7 @@
 #'
 #' @examples
 #' NTDs = sf::st_as_sf(gdverse::NTDs, coords = c('X','Y'))
-#' g = sesp(incidence ~ ., data = NTDs, cores = 1)
+#' g = ssh_marginalcontri(incidence ~ ., data = NTDs, cores = 1)
 #' g
 #'
 ssh_marginalcontri = \(formula, data, overlay = 'and', cores = 1){
@@ -164,4 +164,13 @@ ssh_marginalcontri = \(formula, data, overlay = 'and', cores = 1){
              "determination" = determination)
   class(res) = "sshmc_result"
   return(res)
+}
+
+#' @title print ssh_marginalcontri result
+#' @export
+#' @noRd
+#'
+print.sshmc_result = \(x, ...) {
+  cat("***       Spatial Association Marginal Contributions From SSH     \n")
+  print(knitr::kable(x$spd, format = "markdown", digits = 12, align = 'c', ...))
 }
