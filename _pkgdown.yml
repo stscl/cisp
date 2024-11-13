@@ -1,0 +1,34 @@
+url: https://ausgis.github.io/cisp/
+template:
+  bootstrap: 5
+  math-rendering: mathjax
+  light-switch: true
+
+navbar:
+  structure:
+    right:  [search, github]
+    left: [reference, articles, news]
+  bg: custom
+  components:
+    articles:
+      text: Vignettes
+      menu:
+      - text: A correlation indicator based on spatial patterns
+        href: articles/cisp.html
+
+home:
+  title: |
+    cisp | A Correlation Indicator Based On Spatial Patterns
+authors:
+  Wenbo Lv:
+    href: https://spatlyu.github.io/
+  Yongze Song:
+    href: https://yongzesong.com/
+  Nan Jia:
+    href: https://www.researchgate.net/profile/Nan-Jia-12
+
+reference:
+- title: Correlation Indicator With SSH
+  contents:
+  - spc
+  - ssh_marginalcontri
