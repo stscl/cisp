@@ -73,27 +73,9 @@ system.time({
 ## ℹ In index: 1.
 ## Caused by error in `parallel::clusterExport()`:
 ## ! argument "varlist" is missing, with no default
-## Timing stopped at: 0.41 0.05 175.2
+## Timing stopped at: 1.23 0.28 184.9
 g
-## ***   Spatial Pattern Correlation    
-## 
-## | yv | xv | correlation  |
-## |:--:|:--:|:------------:|
-## | y  | xc | 0.082714411  |
-## | y  | xb | 0.055315842  |
-## | y  | xa | 0.042960555  |
-## | xa | xc | 0.234800659  |
-## | xa | xb | 0.021596576  |
-## | xa | y  | -0.005880822 |
-## | xb | xc | 0.092868735  |
-## | xb | y  | 0.033110354  |
-## | xb | xa | 0.007082261  |
-## | xc | xa | 0.113730996  |
-## | xc | xb | 0.048312694  |
-## | xc | y  | 0.036668224  |
+## Error: object 'g' not found
 plot(g)
-## Warning: `guide_colourbar()` cannot be used for edge_colour.
-## ℹ Use one of colour, color, or fill instead.
+## Error: object 'g' not found
 ```
-
-![**Figure 1**. Results of Spatial pattern correlation](figure/g-1.png)
