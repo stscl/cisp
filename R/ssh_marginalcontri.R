@@ -73,7 +73,7 @@ ssh_marginalcontri = \(formula, data, overlay = 'and', cores = 1){
                                   dti = data, overlay = overlay)
     out_pdv = tibble::as_tibble(do.call(rbind, out_pdv))
   } else {
-    out_pdv = purrr::map_dfr(xs, calcul_pd, dti = data)
+    out_pdv = purrr::map_dfr(xs, calcul_pd, dti = data, overlay = overlay)
   }
   out_pdv = dplyr::pull(out_pdv,1)
   m = length(xname)

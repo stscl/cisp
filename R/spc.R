@@ -34,7 +34,7 @@ spc = \(data, overlay = 'and', discnum = 3:8, minsize = 1,
   }
   xsname = names(data)
   calcul_spcv = \(yname,data,overlay,discnum,minsize,strategy,increase_rate,cores){
-    rgd_res = gdverse::rgd(paste0(yname," ~ ."),data = data, discnum = discnum,
+    rgd_res = gdverse::rgd(paste0(yname," ~ ."), data = data, discnum = discnum,
                            minsize = minsize, strategy = strategy,
                            increase_rate = increase_rate, cores = cores)
     dti = dplyr::bind_cols(dplyr::select(data,dplyr::all_of(yname)),rgd_res$opt_disc)
