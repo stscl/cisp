@@ -14,6 +14,9 @@
 #' multi-core parallel computing.
 #'
 #' @return A list.
+#' \describe{
+#' \item{\code{correlation}}{power of spatial pattern correlation}
+#' }
 #' @export
 #'
 #' @examples
@@ -47,5 +50,7 @@ spc = \(data, overlay = 'and', discnum = 3:8, minsize = 1,
                      dplyr::rename(xv = variable,
                                    correlation = spd) |>
                      dplyr::select(yv,dplyr::everything()))
+  res = list("correlation" = res)
+  class(res) = 'spc_result'
   return(res)
 }
