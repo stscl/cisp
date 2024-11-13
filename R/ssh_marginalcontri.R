@@ -16,8 +16,8 @@
 #' @export
 #'
 #' @examples
-#' NTDs = sf::st_as_sf(gdverse::NTDs, coords = c('X','Y'))
-#' g = ssh_marginalcontri(incidence ~ ., data = NTDs, cores = 1)
+#' NTDs1 = sf::st_as_sf(gdverse::NTDs, coords = c('X','Y'))
+#' g = ssh_marginalcontri(incidence ~ ., data = NTDs1, cores = 1)
 #' g
 #'
 ssh_marginalcontri = \(formula, data, overlay = 'and', cores = 1){
@@ -35,15 +35,14 @@ ssh_marginalcontri = \(formula, data, overlay = 'and', cores = 1){
 
   yname = formula.vars[1]
   xname = colnames(data)[-which(colnames(data) == yname)]
-  dti = dplyr::select(data,,dplyr::all_of(xname))
   xs = sdsfun::generate_subsets(xname,empty = FALSE, self = TRUE)
   spfom = overlay
 
   pd_mc = \(formula, discdata, overlaymethod = 'and'){
     formula = stats::as.formula(formula)
-    formula.vars = all.vars(formula)
+    formulavars = all.vars(formula)
     if (formula.vars[2] != "."){
-      discdata = dplyr::select(discdata,dplyr::all_of(formula.vars))
+      discdata = dplyr::select(discdata,dplyr::all_of(formulavars))
     }
     yname = formula.vars[1]
     if (overlaymethod == 'intersection'){
@@ -57,7 +56,7 @@ ssh_marginalcontri = \(formula, data, overlay = 'and', cores = 1){
     return(qtheta)
   }
 
-  calcul_pd = \(.x){
+  calcul_pd = \(.x,dti){
     qv = pd_mc(paste(yname,'~',paste0(.x,collapse = '+')),dti,spfom)
     names(qv) = "pd"
     return(qv)
@@ -72,10 +71,10 @@ ssh_marginalcontri = \(formula, data, overlay = 'and', cores = 1){
 
   if (doclust) {
     parallel::clusterExport(cores)
-    out_pdv = parallel::parLapply(cores, xs, calcul_pd)
-    out_pdv = tibble::as_tibble(do.call(rbind, calcul_pd))
+    out_pdv = parallel::parLapply(cores, xs, calcul_pd, dti = data)
+    out_pdv = tibble::as_tibble(do.call(rbind, out_pdv))
   } else {
-    out_pdv = purrr::map_dfr(xs, calcul_pd)
+    out_pdv = purrr::map_dfr(xs, calcul_pd, dti = data)
   }
   out_pdv = dplyr::pull(out_pdv,1)
   m = length(xname)
