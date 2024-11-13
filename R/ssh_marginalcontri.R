@@ -130,30 +130,30 @@ ssh_marginalcontri = \(formula, data, overlay = 'and', cores = 1){
     dplyr::arrange(dplyr::desc(spd))
 
   step_interaction = sapply(xs, length)
-  max_rpd_names = sapply(unique(step_interaction), function(.s) {
-    step_rpd = out_pdv[which(step_interaction == .s)]
-    step_indice = which.max(step_rpd)
+  max_pd_names = sapply(unique(step_interaction), function(.s) {
+    step_pd = out_pdv[which(step_interaction == .s)]
+    step_indice = which.max(step_pd)
     return(xs[which(step_interaction == .s)][step_indice])
   })
-  new_rpd_indice = vector("logical",length(xs))
+  new_pd_indice = vector("logical",length(xs))
   new_xsname = vector("character",length(xs))
   for (i in seq_along(xs)) {
     if (step_interaction[i] == 1){
-      new_rpd_indice[i] = TRUE
+      new_pd_indice[i] = TRUE
       new_xsname[i] = xs[[i]]
     } else {
-      current_name = max_rpd_names[step_interaction[i] - 1]
+      current_name = max_pd_names[step_interaction[i] - 1]
       if (all(unlist(current_name) %in% unlist(xs[i]))) {
-        new_rpd_indice[i] = TRUE
+        new_pd_indice[i] = TRUE
         new_xsname[i] = setdiff(xs[[i]], current_name[[1]])
       } else {
-        new_rpd_indice[i] = FALSE
+        new_pd_indice[i] = FALSE
       }
     }
   }
-  determination = tibble::tibble(variable = xsname[new_rpd_indice],
-                                 rpd = out_pdv[new_rpd_indice],
-                                 step = step_interaction[new_rpd_indice],
+  determination = tibble::tibble(variable = xsname[new_pd_indice],
+                                 pd = out_pdv[new_pd_indice],
+                                 step = step_interaction[new_pd_indice],
                                  name = new_xsname[nchar(new_xsname) > 0]) |>
     dplyr::group_by(step) |>
     dplyr::arrange(pd,.by_group=TRUE) |>
@@ -170,6 +170,6 @@ ssh_marginalcontri = \(formula, data, overlay = 'and', cores = 1){
 #' @noRd
 #'
 print.sshmc_result = \(x, ...) {
-  cat("***       Spatial Association Marginal Contributions From SSH     \n")
+  cat("***   Marginal Contributions From SSH     \n")
   print(knitr::kable(x$spd, format = "markdown", digits = 12, align = 'c', ...))
 }
