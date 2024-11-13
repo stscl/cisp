@@ -39,7 +39,7 @@ spc = \(data, overlay = 'and', discnum = 3:8, minsize = 1,
                            increase_rate = increase_rate, cores = cores)
     dti = dplyr::bind_cols(dplyr::select(data,dplyr::all_of(yname)),rgd_res$opt_disc)
     sshmcv = cisp::ssh_marginalcontri(paste0(yname," ~ ."), data = dti,
-                                      overlay = overlay, cores = 1)
+                                      overlay = overlay, cores = cores)
     return(sshmcv$spd)
   }
   res = purrr::map_dfr(xsname,
