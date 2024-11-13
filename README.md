@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# cisp
+# cisp <a href="https://ausgis.github.io/cisp/"><img src="man/figures/logo.png" align="right" height="139" alt="cisp website" /></a>
 
 <!-- badges: start -->
 

@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# cisp
+# cisp <a href="https://ausgis.github.io/cisp/"><img src="man/figures/logo.png" align="right" height="139" alt="cisp website" /></a>
 
 <!-- badges: start -->
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-cyan.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
