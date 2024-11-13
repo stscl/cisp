@@ -3,5 +3,6 @@
 S3method(plot,sshmc_result)
 S3method(print,sshmc_result)
 export("%>%")
+export(spc)
 export(ssh_marginalcontri)
 importFrom(magrittr,"%>%")
