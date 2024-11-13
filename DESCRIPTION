@@ -9,7 +9,11 @@ Authors@R: c(
       person(given = "Yongze", family = "Song",
              email = "yongze.song@outlook.com", 
              role = c("aut"),
-             comment = c(ORCID = "0000-0003-3420-9622"))
+             comment = c(ORCID = "0000-0003-3420-9622")),
+      person(given = "Nan", family = "Jia",
+             email = "cannonjia17@gmail.com", 
+             role = c("aut"),
+             comment = c(ORCID = "0000-0001-8123-7058"))       
       )
 Description: Use spatial association marginal contributions derived from spatial stratified heterogeneity to capture the degree of correlation between spatial patterns.
 License: GPL-3
@@ -23,6 +27,7 @@ Depends:
 Imports: 
     dplyr,
     forcats,
+    gdverse,
     ggplot2,
     magrittr,
     parallel,
@@ -31,7 +36,6 @@ Imports:
     sf,
     tibble
 Suggests: 
-    gdverse,
     knitr,
     rmarkdown
 Remotes:
