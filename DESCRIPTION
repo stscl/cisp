@@ -29,4 +29,7 @@ Imports:
     sf,
     tibble
 Suggests: 
-    gdverse
+    gdverse,
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
