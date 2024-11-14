@@ -7,13 +7,26 @@
 
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-cyan.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
-[![cran](https://www.r-pkg.org/badges/version/cisp)](https://CRAN.R-project.org/package=cisp)
-[![r-universe](https://ausgis.r-universe.dev/badges/cisp?color=cyan)](https://ausgis.r-universe.dev/cisp)
+[![CRAN](https://www.r-pkg.org/badges/version/cisp)](https://CRAN.R-project.org/package=cisp)
+[![R-universe](https://ausgis.r-universe.dev/badges/cisp?color=cyan)](https://ausgis.r-universe.dev/cisp)
 <!-- badges: end -->
 
 **A Correlation Indicator Based On Spatial Patterns**
 
 ## Installation
+
+- Install development binary version from
+  [R-universe](https://ausgis.r-universe.dev/cisp) with:
+
+``` r
+install.packages('cisp',
+                 repos = c("https://ausgis.r-universe.dev",
+                           "https://cloud.r-project.org"),
+                 dep = TRUE)
+```
+
+- Install development source version from
+  [GitHub](https://github.com/ausgis/cisp) with:
 
 ``` r
 if (!requireNamespace("devtools")) {
