@@ -15,7 +15,7 @@ Authors@R: c(
              role = c("aut"),
              comment = c(ORCID = "0000-0001-8123-7058"))       
       )
-Description: Use spatial association marginal contributions derived from spatial stratified heterogeneity to capture the degree of correlation between spatial patterns.
+Description: Use the spatial association marginal contributions derived from spatial stratified heterogeneity to capture the degree of correlation between spatial patterns.
 License: GPL-3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
@@ -40,6 +40,4 @@ Imports:
 Suggests: 
     knitr,
     rmarkdown
-Remotes:
-    stscl/sdsfun
 VignetteBuilder: knitr
