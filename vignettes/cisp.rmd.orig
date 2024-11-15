@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 if (!requireNamespace("devtools")) {
     install.packages("devtools")
 }
-devtools::install_github("ausgis/cisp",
+devtools::install_github("stscl/cisp",
                          build_vignettes = TRUE,
                          dep = TRUE)
 ```
