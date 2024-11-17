@@ -41,10 +41,13 @@ depression = system.file('extdata/Depression.csv',package = 'gdverse') |>
 depression
 ```
 
-```{r g,fig.width=8.55,fig.height=4.05,fig.cap=knitr::asis_output("**Figure 1**. Results of Spatial pattern correlation")}
+```{r run_g}
 system.time({
   g = cisp::spc(depression,cores = 12)
 })
 g
+```
+
+```{r plot_g,fig.width=8.05,fig.height=4.05,fig.cap=knitr::asis_output("**Figure 1**. Results of Spatial pattern correlation")}
 plot(g)
 ```

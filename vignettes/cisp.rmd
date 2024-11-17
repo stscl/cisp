@@ -186,9 +186,10 @@ g
 ## |      X.HouseRent      | Depression_prevelence | -5.869152e-03 |
 ## |      X.HouseRent      |         Beer          | -6.924018e-03 |
 ## |      X.HouseRent      |      NatureParks      | -1.046909e-02 |
-plot(g)
-## Warning: `guide_colourbar()` cannot be used for edge_colour.
-## ℹ Use one of colour, color, or fill instead.
 ```
 
-![**Figure 1**. Results of Spatial pattern correlation](../man/figures/cisp/g-1.png)
+```r
+plot(g)
+```
+
+![**Figure 1**. Results of Spatial pattern correlation](../man/figures/cisp/plot_g-1.png)
