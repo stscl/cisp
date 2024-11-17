@@ -48,6 +48,6 @@ system.time({
 g
 ```
 
-```{r plot_g,fig.width=8.05,fig.height=4.05,fig.cap=knitr::asis_output("**Figure 1**. Results of Spatial pattern correlation")}
+```{r plot_g,fig.width=8.05,fig.height=4.05,fig.cap=knitr::asis_output("**Figure 1**. Results of spatial pattern correlation")}
 plot(g)
 ```

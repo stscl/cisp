@@ -192,4 +192,4 @@ g
 plot(g)
 ```
 
-![**Figure 1**. Results of Spatial pattern correlation](../man/figures/cisp/plot_g-1.png)
+![**Figure 1**. Results of spatial pattern correlation](../man/figures/cisp/plot_g-1.png)
