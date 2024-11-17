@@ -27,7 +27,7 @@ Depends:
 Imports: 
     dplyr,
     forcats,
-    gdverse,
+    gdverse (>= 1.3),
     ggplot2,
     ggraph,
     igraph,
