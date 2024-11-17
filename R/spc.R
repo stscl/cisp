@@ -78,10 +78,15 @@ plot.spc_result = \(x, ...) {
     ggraph::geom_node_text(ggplot2::aes(label = name), repel = TRUE) +
     ggraph::scale_edge_color_gradient2(low = "blue", mid = "gray",
                                        high = "red", midpoint = 0,
-                                       guide = "colorbar") +
-    ggraph::scale_edge_width(range = c(0.5, 2)) +
+                                       guide = ggraph::guide_edge_colorbar(
+                                         barwidth = 10,
+                                         barheight = 0.5,
+                                         label.theme = ggplot2::element_text(size = 10,
+                                                                             margin = ggplot2::margin(t = 2, b = 2))
+                                       )) +
+    ggraph::scale_edge_width(range = c(0.5, 2), guide = 'none') +
     ggplot2::theme_void() +
     ggplot2::theme(legend.position = "bottom") +
-    ggplot2::labs(edge_color = "Strength", edge_width = "Intensity")
+    ggplot2::labs(edge_color = "Strength")
   return(fig_g)
 }
