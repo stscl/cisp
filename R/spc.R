@@ -15,7 +15,8 @@
 #'
 #' @return A list.
 #' \describe{
-#' \item{\code{correlation}}{power of spatial pattern correlation}
+#' \item{\code{correlation_tbl}}{A tibble with power of spatial pattern correlation}
+#' \item{\code{correlation_mat}}{A matrix with power of spatial pattern correlation}
 #' }
 #' @export
 #'
@@ -50,7 +51,12 @@ spc = \(data, overlay = 'and', discnum = 3:8, minsize = 1,
                      dplyr::rename(xv = variable,
                                    correlation = spd) |>
                      dplyr::select(yv,dplyr::everything()))
-  res = list("correlation" = res)
+  res_mat = res |>
+    tidyr::pivot_wider(names_from = yv, values_from = correlation) |>
+    tibble::column_to_rownames(var = 'xv') |>
+    as.matrix()
+  res_mat[is.na(res_mat)] = 1
+  res = list("correlation_tbl" = res,"correlation_mat" = res_mat)
   class(res) = 'spc_result'
   return(res)
 }
@@ -69,7 +75,7 @@ print.spc_result = \(x, ...) {
 #' @noRd
 #'
 plot.spc_result = \(x, ...) {
-  g = igraph::graph_from_data_frame(x$correlation, directed = TRUE)
+  g = igraph::graph_from_data_frame(x$correlation_tbl, directed = TRUE)
   fig_g = ggraph::ggraph(g, layout = "circle") +
     ggraph::geom_edge_arc(ggplot2::aes(width = abs(correlation), color = correlation),
                           arrow = grid::arrow(type = "closed", length = grid::unit(3, "mm")),
