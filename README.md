@@ -11,7 +11,7 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-cyan.svg)](htt
 [![R-universe](https://stscl.r-universe.dev/badges/cisp?color=cyan)](https://stscl.r-universe.dev/cisp)
 <!-- badges: end -->
 
-**A Correlation Indicator Based On Spatial Patterns**
+**A Correlation Indicator Based on Spatial Patterns**
 
 ## Installation
 
