@@ -1,5 +1,5 @@
 Package: cisp
-Title: A Correlation Indicator Based On Spatial Patterns 
+Title: A Correlation Indicator Based on Spatial Patterns 
 Version: 0.1.0
 Authors@R: c(
       person(given = "Wenbo", family = "Lv",
