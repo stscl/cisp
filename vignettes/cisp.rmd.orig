@@ -48,6 +48,14 @@ system.time({
 g
 ```
 
-```{r plot_g,fig.width=8.05,fig.height=4.05,fig.cap=knitr::asis_output("**Figure 1**. Results of spatial pattern correlation")}
+The results are visualized in a default network graph style:
+
+```{r plot_g1,fig.width=8.05,fig.height=4.05,fig.cap=knitr::asis_output("**Figure 1**. Spatial Pattern Correlation Network Visualization Results")}
 plot(g)
+```
+
+But the results can also be plotted using the classic correlation coefficient matrix visualization style:
+
+```{r plot_g2,fig.width=8.05,fig.height=7.55,fig.cap=knitr::asis_output("**Figure 2**. Spatial Pattern Correlation Matrix Visualization Results")}
+plot(g,style = "matrix")
 ```
