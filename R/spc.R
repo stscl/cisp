@@ -50,7 +50,7 @@ spc = \(data, overlay = 'and', discnum = 3:8, minsize = 1,
                      dplyr::mutate(yv = .x) |>
                      dplyr::rename(xv = variable,
                                    correlation = spd) |>
-                     dplyr::select(yv,dplyr::everything()))
+                     dplyr::select(xv,yv,correlation))
   res_mat = res |>
     tidyr::pivot_wider(names_from = yv, values_from = correlation) |>
     tibble::column_to_rownames(var = 'xv') |>
@@ -67,7 +67,7 @@ spc = \(data, overlay = 'and', discnum = 3:8, minsize = 1,
 #'
 print.spc_result = \(x, ...) {
   cat("***   Spatial Pattern Correlation    ")
-  print(knitr::kable(x$correlation, format = "markdown", digits = 12, align = 'c', ...))
+  print(knitr::kable(x$correlation_tbl, format = "markdown", digits = 5, align = 'c', ...))
 }
 
 #' @title plot spc result
