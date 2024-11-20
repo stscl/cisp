@@ -34,9 +34,11 @@ Imports:
     magrittr,
     parallel,
     purrr,
+    RColorBrewer,
     sdsfun (>= 0.4.3),
     sf,
-    tibble
+    tibble,
+    tidyr
 Suggests: 
     knitr,
     rmarkdown
