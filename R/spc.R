@@ -74,25 +74,40 @@ print.spc_result = \(x, ...) {
 #' @export
 #' @noRd
 #'
-plot.spc_result = \(x, ...) {
-  g = igraph::graph_from_data_frame(x$correlation_tbl, directed = TRUE)
-  fig_g = ggraph::ggraph(g, layout = "circle") +
-    ggraph::geom_edge_arc(ggplot2::aes(width = abs(correlation), color = correlation),
-                          arrow = grid::arrow(type = "closed", length = grid::unit(3, "mm")),
-                          end_cap = ggraph::circle(3, 'mm')) +
-    ggraph::geom_node_point(size = 5) +
-    ggraph::geom_node_text(ggplot2::aes(label = name), repel = TRUE) +
-    ggraph::scale_edge_color_gradient2(low = "blue", mid = "gray",
-                                       high = "red", midpoint = 0,
-                                       guide = ggraph::guide_edge_colorbar(
-                                         barwidth = 10,
-                                         barheight = 0.5,
-                                         label.theme = ggplot2::element_text(size = 10,
-                                                                             margin = ggplot2::margin(t = 2, b = 2))
-                                       )) +
-    ggraph::scale_edge_width(range = c(0.5, 2), guide = 'none') +
-    ggplot2::theme_void() +
-    ggplot2::theme(legend.position = "bottom") +
-    ggplot2::labs(edge_color = "Strength")
+plot.spc_result = \(x, style = c("network","matrix"), ...) {
+  style = match.arg(style)
+  switch(style,
+         "network" = {
+           g = igraph::graph_from_data_frame(x$correlation_tbl, directed = TRUE)
+           fig_g = ggraph::ggraph(g, layout = "circle") +
+             ggraph::geom_edge_arc(ggplot2::aes(width = abs(correlation), color = correlation),
+                                   arrow = grid::arrow(type = "closed", length = grid::unit(3, "mm")),
+                                   end_cap = ggraph::circle(3, 'mm')) +
+             ggraph::geom_node_point(size = 5) +
+             ggraph::geom_node_text(ggplot2::aes(label = name), repel = TRUE) +
+             ggraph::scale_edge_color_gradient2(low = "blue", mid = "gray",
+                                                high = "red", midpoint = 0,
+                                                guide = ggraph::guide_edge_colorbar(
+                                                  barwidth = 10,
+                                                  barheight = 0.5,
+                                                  label.theme = ggplot2::element_text(size = 10,
+                                                                                      margin = ggplot2::margin(t = 2, b = 2))
+                                                )) +
+             ggraph::scale_edge_width(range = c(0.5, 2), guide = 'none') +
+             ggplot2::theme_void() +
+             ggplot2::theme(legend.position = "bottom") +
+             ggplot2::labs(edge_color = "Strength")
+         },
+         "matrix" = {
+           g = x$correlation_tbl
+           fig_g = ggplot2::ggplot(data = g,
+                                   ggplot2::aes(x = yv, y = xv, fill = correlation)) +
+             ggplot2::geom_tile() +
+             ggplot2::geom_text(ggplot2::aes(label = round(correlation, 2)), color = "black") +
+             ggplot2::scale_fill_gradient2(low = "blue", high = "red", mid = "white", midpoint = 0,
+                                           limits = c(-1, 1)) +
+             ggplot2::theme_minimal() +
+             ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 45, hjust = 1))
+  })
   return(fig_g)
 }
