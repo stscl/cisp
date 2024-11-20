@@ -37,7 +37,8 @@ multi-core parallel computing.}
 \value{
 A list.
 \describe{
-\item{\code{correlation}}{power of spatial pattern correlation}
+\item{\code{correlation_tbl}}{A tibble with power of spatial pattern correlation}
+\item{\code{correlation_mat}}{A matrix with power of spatial pattern correlation}
 }
 }
 \description{
