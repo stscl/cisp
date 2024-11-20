@@ -102,12 +102,18 @@ plot.spc_result = \(x, style = c("network","matrix"), ...) {
            g = x$correlation_tbl
            fig_g = ggplot2::ggplot(data = g,
                                    ggplot2::aes(x = yv, y = xv, fill = correlation)) +
-             ggplot2::geom_tile() +
-             ggplot2::geom_text(ggplot2::aes(label = round(correlation, 2)), color = "black") +
-             ggplot2::scale_fill_gradient2(low = "blue", high = "red", mid = "white", midpoint = 0,
-                                           limits = c(-1, 1)) +
-             ggplot2::theme_minimal() +
-             ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 45, hjust = 1))
+             ggplot2::geom_tile(color = "white") +
+             ggplot2::scale_fill_gradientn(colors = RColorBrewer::brewer.pal(11, "RdBu"),
+                                           limits = range(g$correlation)) +
+             ggplot2::geom_text(ggplot2::aes(label = round(correlation, 3)), color = "black") +
+             ggplot2::coord_equal() +
+             ggplot2::theme_void() +
+             ggplot2::theme(
+               axis.text.x = ggplot2::element_text(angle = 90),
+               axis.text.y = ggplot2::element_text(color = "black"),
+               panel.grid = ggplot2::element_blank(),
+               panel.border = ggplot2::element_blank()
+             )
   })
   return(fig_g)
 }
