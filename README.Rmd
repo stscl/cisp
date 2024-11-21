@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 [![R-universe](https://stscl.r-universe.dev/badges/cisp?color=cyan)](https://stscl.r-universe.dev/cisp)
 <!-- badges: end -->
 
-**A Correlation Indicator Based On Spatial Patterns**
+**A Correlation Indicator Based on Spatial Patterns**
 
 ## Installation
 
