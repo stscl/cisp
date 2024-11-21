@@ -12,12 +12,7 @@ vignette: >
 ## Install and load R packages
 
 ```r
-if (!requireNamespace("devtools")) {
-    install.packages("devtools")
-}
-devtools::install_github("stscl/cisp",
-                         build_vignettes = TRUE,
-                         dep = TRUE)
+install.packages("cisp", dep = TRUE)
 ```
 
 ```r
