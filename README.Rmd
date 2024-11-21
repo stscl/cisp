@@ -18,12 +18,20 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-cyan.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![CRAN](https://www.r-pkg.org/badges/version/cisp)](https://CRAN.R-project.org/package=cisp)
+[![DownloadsAll](https://badgen.net/cran/dt/cisp?color=orange)](https://CRAN.R-project.org/package=cisp)
+[![DownloadsMonth](https://cranlogs.r-pkg.org/badges/cisp)](https://CRAN.R-project.org/package=gdcisp)
 [![R-universe](https://stscl.r-universe.dev/badges/cisp?color=cyan)](https://stscl.r-universe.dev/cisp)
 <!-- badges: end -->
 
 **A Correlation Indicator Based on Spatial Patterns**
 
 ## Installation
+
+- Install from [CRAN](https://CRAN.R-project.org/package=cisp) with:
+
+``` r
+install.packages("cisp", dep = TRUE)
+```
 
 - Install development binary version from [R-universe](https://stscl.r-universe.dev/cisp) with:
 
