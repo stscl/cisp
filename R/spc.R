@@ -106,11 +106,14 @@ plot.spc_result = \(x, style = c("network","matrix"), ...) {
              ggplot2::scale_fill_gradientn(colors = RColorBrewer::brewer.pal(11, "RdBu"),
                                            limits = range(g$correlation)) +
              ggplot2::geom_text(ggplot2::aes(label = round(correlation, 3)), color = "black") +
+             ggplot2::labs(x = "Dependent Variable", y = "Independent Variable") +
              ggplot2::coord_equal() +
              ggplot2::theme_void() +
              ggplot2::theme(
                axis.text.x = ggplot2::element_text(angle = 90),
                axis.text.y = ggplot2::element_text(color = "black"),
+               axis.title.y = ggplot2::element_text(angle = 90),
+               axis.title = ggplot2::element_text(face = "italic", color = "red"),
                panel.grid = ggplot2::element_blank(),
                panel.border = ggplot2::element_blank()
              )

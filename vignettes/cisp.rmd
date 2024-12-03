@@ -65,7 +65,7 @@ system.time({
   g = cisp::spc(depression,cores = 12)
 })
 ##    user  system elapsed 
-##    5.54    1.00 2024.50
+##    6.07    0.86 2018.65
 g
 ## ***   Spatial Pattern Correlation    
 ## 
