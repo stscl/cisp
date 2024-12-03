@@ -111,7 +111,9 @@ plot.spc_result = \(x, style = c("network","matrix"), ...) {
              ggplot2::theme_void() +
              ggplot2::theme(
                axis.text.x = ggplot2::element_text(angle = 90),
-               axis.title = ggplot2::element_text(face = "bold"),
+               axis.text.y = ggplot2::element_text(color = "black"),
+               axis.title.y = ggplot2::element_text(angle = 90),
+               axis.title = ggplot2::element_text(face = "italic", color = "red"),
                panel.grid = ggplot2::element_blank(),
                panel.border = ggplot2::element_blank()
              )
