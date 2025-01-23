@@ -64,12 +64,12 @@ ssh_marginalcontri = \(formula, data, overlay = 'and', cores = 1){
   doclust = FALSE
   if (cores > 1) {
     doclust = TRUE
-    cores = parallel::makeCluster(cores)
-    on.exit(parallel::stopCluster(cores), add=TRUE)
+    cl = parallel::makeCluster(cores)
+    on.exit(parallel::stopCluster(cl), add=TRUE)
   }
 
   if (doclust) {
-    out_pdv = parallel::parLapply(cores, xs, calcul_pd,
+    out_pdv = parallel::parLapply(cl, xs, calcul_pd,
                                   dti = data, overlay = overlay)
     out_pdv = tibble::as_tibble(do.call(rbind, out_pdv))
   } else {
@@ -110,7 +110,7 @@ ssh_marginalcontri = \(formula, data, overlay = 'and', cores = 1){
   }
 
   if (doclust) {
-    out_g = parallel::parLapply(cores,xname,calcul_shap)
+    out_g = parallel::parLapply(cl,xname,calcul_shap)
     out_g = tibble::as_tibble(do.call(rbind, out_g))
   } else {
     out_g = purrr::map_dfr(xname,calcul_shap)
