@@ -46,9 +46,7 @@
 <span>  <span class="va">data</span>,</span>
 <span>  overlay <span class="op">=</span> <span class="st">"and"</span>,</span>
 <span>  discnum <span class="op">=</span> <span class="fl">3</span><span class="op">:</span><span class="fl">8</span>,</span>
-<span>  minsize <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  strategy <span class="op">=</span> <span class="fl">2L</span>,</span>
-<span>  increase_rate <span class="op">=</span> <span class="fl">0.05</span>,</span>
+<span>  discmethod <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sd"</span>, <span class="st">"equal"</span>, <span class="st">"geometric"</span>, <span class="st">"quantile"</span>, <span class="st">"natural"</span><span class="op">)</span>,</span>
 <span>  cores <span class="op">=</span> <span class="fl">1</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -67,35 +65,25 @@ Default is <code>and</code>.</p></dd>
 
 
 <dt id="arg-discnum">discnum<a class="anchor" aria-label="anchor" href="#arg-discnum"></a></dt>
-<dd><p>A numeric vector of discretized classes of columns that need to be discretized.
-Default all <code>discvar</code> use <code>3:8</code>.</p></dd>
+<dd><p>(optional) A vector of number of classes for discretization. Default is <code>3:8</code>.</p></dd>
 
 
-<dt id="arg-minsize">minsize<a class="anchor" aria-label="anchor" href="#arg-minsize"></a></dt>
-<dd><p>(optional) The min size of each discretization group. Default all use <code>1</code>.</p></dd>
-
-
-<dt id="arg-strategy">strategy<a class="anchor" aria-label="anchor" href="#arg-strategy"></a></dt>
-<dd><p>(optional) Optimal discretization strategy. When <code>strategy</code> is <code>1L</code>, choose the highest
-q-statistics to determinate optimal spatial data discretization parameters. When <code>strategy</code> is <code>2L</code>,
-The optimal discrete parameters of spatial data are selected by combining LOESS model.</p></dd>
-
-
-<dt id="arg-increase-rate">increase_rate<a class="anchor" aria-label="anchor" href="#arg-increase-rate"></a></dt>
-<dd><p>(optional) The critical increase rate of the number of discretization. Default is <code>5%</code>.</p></dd>
+<dt id="arg-discmethod">discmethod<a class="anchor" aria-label="anchor" href="#arg-discmethod"></a></dt>
+<dd><p>(optional) A vector of methods for discretization, default is using
+<code>c("sd","equal","geometric","quantile","natural")</code> by invoking <code>sdsfun</code>.</p></dd>
 
 
 <dt id="arg-cores">cores<a class="anchor" aria-label="anchor" href="#arg-cores"></a></dt>
-<dd><p>(optional) Positive integer (default is 1). When cores are greater than 1, use
-multi-core parallel computing.</p></dd>
+<dd><p>(optional) Positive integer (default is 1). When cores are greater than 1,
+use parallel computing.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A list.</p><dl><dt><code>correlation_tbl</code></dt>
+    <p>A list.</p><dl><dt><code>cor_tbl</code></dt>
 <dd><p>A tibble with power of spatial pattern correlation</p></dd>
 
-<dt><code>correlation_mat</code></dt>
+<dt><code>cor_mat</code></dt>
 <dd><p>A matrix with power of spatial pattern correlation</p></dd>
 
 
@@ -103,13 +91,49 @@ multi-core parallel computing.</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
-<span class="r-in"><span><span class="co">## The following code needs to configure the Python environment to run:</span></span></span>
-<span class="r-in"><span><span class="va">sim1</span> <span class="op">=</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html" class="external-link">st_as_sf</a></span><span class="op">(</span><span class="fu">gdverse</span><span class="fu">::</span><span class="va"><a href="https://stscl.github.io/gdverse/reference/sim.html" class="external-link">sim</a></span>,coords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'lo'</span>,<span class="st">'la'</span><span class="op">)</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">sim1</span> <span class="op">=</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html" class="external-link">st_as_sf</a></span><span class="op">(</span><span class="fu">gdverse</span><span class="fu">::</span><span class="va"><a href="https://stscl.github.io/gdverse/reference/sim.html" class="external-link">sim</a></span>,coords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'lo'</span>,<span class="st">'la'</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">sim1</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 80 features and 4 fields</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 1 ymin: 1 xmax: 10 ymax: 8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> CRS:           NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 80 × 5</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        y    xa    xb    xc geometry</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;POINT&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>  0.23  1.96  4.17  4.82    (1 1)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>  0.34 10.7   3.83  7.41    (2 1)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>  0.32  3.08  4.23  5.25    (3 1)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>  0.25  2.67  3.02  3.91    (4 1)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>  0.49  9.05  3.65  6.67    (5 1)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>  0.7   4.93  4.16  5.80    (6 1)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>  0.8   9.99  3.86  7.19    (7 1)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>  0.84  2.60  2.56  3.43    (8 1)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>  0.78  8.23  2.99  5.74    (9 1)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>  0.65 14.8   2.03  6.97   (10 1)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 70 more rows</span></span>
+<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="va">g</span> <span class="op">=</span> <span class="fu">spc</span><span class="op">(</span><span class="va">sim1</span>, discnum <span class="op">=</span> <span class="fl">3</span><span class="op">:</span><span class="fl">6</span>, cores <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">g</span></span></span>
-<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
-<span class="r-in"><span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ***   Spatial Pattern Correlation    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> | xv | yv | correlation |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |:--:|:--:|:-----------:|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> | xc | y  |   0.11456   |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> | xb | y  |   0.08727   |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> | xa | y  |   0.02027   |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> | xc | xa |   0.32194   |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> | y  | xa |   0.03498   |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> | xb | xa |   0.02510   |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> | xc | xb |   0.14924   |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> | y  | xb |   0.04607   |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> | xa | xb |   0.04362   |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> | xa | xc |   0.12067   |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> | xb | xc |   0.05717   |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> | y  | xc |   0.02997   |</span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">g</span>,<span class="st">"matrix"</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="spc-1.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
