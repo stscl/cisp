@@ -23,8 +23,8 @@ Default is \code{and}.}
 \item{discmethod}{(optional) A vector of methods for discretization, default is using
 \code{c("sd","equal","geometric","quantile","natural")} by invoking \code{sdsfun}.}
 
-\item{cores}{(optional) Positive integer (default is 1). When cores are greater than 1, use
-multi-core parallel computing.}
+\item{cores}{(optional) Positive integer (default is 1). When cores are greater than 1,
+use parallel computing.}
 }
 \value{
 A list.
@@ -37,9 +37,9 @@ A list.
 spatial pattern correlation
 }
 \examples{
-\dontrun{
-## The following code needs to configure the Python environment to run:
 sim1 = sf::st_as_sf(gdverse::sim,coords = c('lo','la'))
+sim1
+\donttest{
 g = spc(sim1, discnum = 3:6, cores = 1)
 g
 }

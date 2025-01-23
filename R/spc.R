@@ -6,8 +6,8 @@
 #' @param discnum (optional) A vector of number of classes for discretization. Default is `3:8`.
 #' @param discmethod (optional) A vector of methods for discretization, default is using
 #' `c("sd","equal","geometric","quantile","natural")` by invoking `sdsfun`.
-#' @param cores (optional) Positive integer (default is 1). When cores are greater than 1, use
-#' multi-core parallel computing.
+#' @param cores (optional) Positive integer (default is 1). When cores are greater than 1,
+#' use parallel computing.
 #'
 #' @return A list.
 #' \describe{
@@ -17,9 +17,9 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#' ## The following code needs to configure the Python environment to run:
 #' sim1 = sf::st_as_sf(gdverse::sim,coords = c('lo','la'))
+#' sim1
+#' \donttest{
 #' g = spc(sim1, discnum = 3:6, cores = 1)
 #' g
 #' }
