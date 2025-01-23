@@ -23,7 +23,6 @@
 #' g = spc(sim1, discnum = 3:6, cores = 1)
 #' g
 #' }
-#'
 spc = \(data, overlay = 'and', discnum = 3:8,
         discmethod = c("sd","equal","geometric","quantile","natural"),
         cores = 1){
