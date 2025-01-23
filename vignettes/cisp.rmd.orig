@@ -11,7 +11,7 @@ vignette: >
 knitr::opts_chunk$set(
   collapse = TRUE,
   fig.path = "man/figures/cisp/",
-  fig.dpi = 150
+  fig.dpi = 100
 )
 ```
 
@@ -27,30 +27,30 @@ library(cisp)
 
 ## Spatial pattern correlation
 
-Using the same data as [the gdverse idsa vignette](https://stscl.github.io/gdverse/articles/idsa.html):
+Using the same data as [the gdverse opgd vignette](https://stscl.github.io/gdverse/articles/opgd.html). Since the `spc` function in CISP requires all input variables to be continuous, only continuous variables are retained in the data:
 
 ```{r load_data}
-depression = system.file('extdata/Depression.csv',package = 'gdverse') |>
-  readr::read_csv() |>
-  sf::st_as_sf(coords = c('X','Y'), crs = 4326)
-depression
+ndvi = gdverse::ndvi
+ndvi
+ndvi = dplyr::select(ndvi,-c(Climatezone,Mining))
+ndvi
 ```
 
 ```{r run_g}
 system.time({
-  g = cisp::spc(depression,cores = 12)
+  g = cisp::spc(ndvi,cores = 6)
 })
 g
 ```
 
 The results are visualized in a default network graph style:
 
-```{r plot_g1,fig.width=8.05,fig.height=4.05,fig.cap=knitr::asis_output("**Figure 1**. Spatial Pattern Correlation Network Visualization Results")}
+```{r plot_g1,fig.width=5,fig.height=3.55,fig.cap=knitr::asis_output("**Figure 1**. Spatial Pattern Correlation Network Visualization Results")}
 plot(g)
 ```
 
 But the results can also be plotted using the classic correlation coefficient matrix visualization style:
 
-```{r plot_g2,fig.width=8.05,fig.height=7.55,fig.cap=knitr::asis_output("**Figure 2**. Spatial Pattern Correlation Matrix Visualization Results")}
+```{r plot_g2,fig.width=5,fig.height=3.55,fig.cap=knitr::asis_output("**Figure 2**. Spatial Pattern Correlation Matrix Visualization Results")}
 plot(g,style = "matrix")
 ```
