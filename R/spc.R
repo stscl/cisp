@@ -11,8 +11,8 @@
 #'
 #' @return A list.
 #' \describe{
-#' \item{\code{correlation_tbl}}{A tibble with power of spatial pattern correlation}
-#' \item{\code{correlation_mat}}{A matrix with power of spatial pattern correlation}
+#' \item{\code{cor_tbl}}{A tibble with power of spatial pattern correlation}
+#' \item{\code{cor_mat}}{A matrix with power of spatial pattern correlation}
 #' }
 #' @export
 #'
@@ -53,7 +53,7 @@ spc = \(data, overlay = 'and', discnum = 3:8,
     tibble::column_to_rownames(var = 'xv') |>
     as.matrix()
   res_mat[is.na(res_mat)] = 1
-  res = list("correlation_tbl" = res,"correlation_mat" = res_mat)
+  res = list("cor_tbl" = res,"cor_mat" = res_mat)
   class(res) = 'spc_result'
   return(res)
 }
@@ -64,7 +64,7 @@ spc = \(data, overlay = 'and', discnum = 3:8,
 #'
 print.spc_result = \(x, ...) {
   cat("***   Spatial Pattern Correlation    ")
-  print(knitr::kable(x$correlation_tbl, format = "markdown", digits = 5, align = 'c', ...))
+  print(knitr::kable(x$cor_tbl, format = "markdown", digits = 5, align = 'c', ...))
 }
 
 #' @title plot spc result
@@ -75,7 +75,7 @@ plot.spc_result = \(x, style = c("network","matrix"), ...) {
   style = match.arg(style)
   switch(style,
          "network" = {
-           g = igraph::graph_from_data_frame(x$correlation_tbl, directed = TRUE)
+           g = igraph::graph_from_data_frame(x$cor_tbl, directed = TRUE)
            fig_g = ggraph::ggraph(g, layout = "circle") +
              ggraph::geom_edge_arc(ggplot2::aes(width = abs(correlation), color = correlation),
                                    arrow = grid::arrow(type = "closed", length = grid::unit(3, "mm")),
@@ -96,7 +96,7 @@ plot.spc_result = \(x, style = c("network","matrix"), ...) {
              ggplot2::labs(edge_color = "Strength")
          },
          "matrix" = {
-           g = x$correlation_tbl
+           g = x$cor_tbl
            fig_g = ggplot2::ggplot(data = g,
                                    ggplot2::aes(x = yv, y = xv, fill = correlation)) +
              ggplot2::geom_tile(color = "white") +
