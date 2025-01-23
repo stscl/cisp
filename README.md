@@ -6,7 +6,7 @@
 <!-- badges: start -->
 
 [![Lifecycle:
-experimental](https://img.shields.io/badge/lifecycle-experimental-cyan.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+stable](https://img.shields.io/badge/lifecycle-stable-cyan.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![CRAN](https://www.r-pkg.org/badges/version/cisp)](https://CRAN.R-project.org/package=cisp)
 [![DownloadsAll](https://badgen.net/cran/dt/cisp?color=orange)](https://CRAN.R-project.org/package=cisp)
 [![DownloadsMonth](https://cranlogs.r-pkg.org/badges/cisp)](https://CRAN.R-project.org/package=cisp)
