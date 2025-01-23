@@ -65,7 +65,7 @@ system.time({
   g = cisp::spc(ndvi,cores = 6)
 })
 ##    user  system elapsed 
-##    1.14    0.30   23.16
+##    0.84    0.20   21.50
 g
 ## ***   Spatial Pattern Correlation    
 ## 
