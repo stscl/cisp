@@ -99,8 +99,8 @@ plot.spc_result = \(x, style = c("network","matrix"), ...) {
            fig_g = ggplot2::ggplot(data = g,
                                    ggplot2::aes(x = yv, y = xv, fill = correlation)) +
              ggplot2::geom_tile(color = "white") +
-             ggplot2::scale_fill_gradientn(colors = RColorBrewer::brewer.pal(11, "RdBu"),
-                                           limits = range(g$correlation)) +
+             ggplot2::scale_fill_gradient2(low = "blue", mid = "gray",
+                                           high = "red", midpoint = 0) +
              ggplot2::geom_text(ggplot2::aes(label = round(correlation, 3)), color = "black") +
              ggplot2::labs(x = "Dependent Variable", y = "Independent Variable") +
              ggplot2::coord_equal() +
