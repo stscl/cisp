@@ -82,162 +82,74 @@
 <div class="section level2">
 <h2 id="spatial-pattern-correlation">Spatial pattern correlation<a class="anchor" aria-label="anchor" href="#spatial-pattern-correlation"></a>
 </h2>
-<p>Using the same data as <a href="https://stscl.github.io/gdverse/articles/idsa.html" class="external-link">the gdverse
-idsa vignette</a>:</p>
+<p>Using the same data as <a href="https://stscl.github.io/gdverse/articles/opgd.html" class="external-link">the gdverse
+opgd vignette</a>. Since the <code>spc</code> function in CISP requires
+all input variables to be continuous, only continuous variables are
+retained in the data:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">depression</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">'extdata/Depression.csv'</span>,package <span class="op">=</span> <span class="st">'gdverse'</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">readr</span><span class="fu">::</span><span class="fu">read_csv</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html" class="external-link">st_as_sf</a></span><span class="op">(</span>coords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'X'</span>,<span class="st">'Y'</span><span class="op">)</span>, crs <span class="op">=</span> <span class="fl">4326</span><span class="op">)</span></span>
-<span><span class="co">## Rows: 1072 Columns: 13</span></span>
-<span><span class="co">## ── Column specification ───────────────────────────────────────────────────────────────────────────</span></span>
-<span><span class="co">## Delimiter: ","</span></span>
-<span><span class="co">## dbl (13): X, Y, Depression_prevelence, PopulationDensity, Population65, NoHealthInsurance, Neig...</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## ℹ Use `spec()` to retrieve the full column specification for this data.</span></span>
-<span><span class="co">## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</span></span>
-<span><span class="va">depression</span></span>
-<span><span class="co">## Simple feature collection with 1072 features and 11 fields</span></span>
-<span><span class="co">## Geometry type: POINT</span></span>
-<span><span class="co">## Dimension:     XY</span></span>
-<span><span class="co">## Bounding box:  xmin: -83.1795 ymin: 32.11464 xmax: -78.6023 ymax: 35.17354</span></span>
-<span><span class="co">## Geodetic CRS:  WGS 84</span></span>
-<span><span class="co">## # A tibble: 1,072 × 12</span></span>
-<span><span class="co">##    Depression_prevelence PopulationDensity Population65 NoHealthInsurance Neighbor_Disadvantage</span></span>
-<span><span class="co">##  *                 &lt;dbl&gt;             &lt;dbl&gt;        &lt;dbl&gt;             &lt;dbl&gt;                 &lt;dbl&gt;</span></span>
-<span><span class="co">##  1                  23.1              61.5         22.5              7.98               -0.0525</span></span>
-<span><span class="co">##  2                  22.8              58.3         16.8             11.0                -0.254 </span></span>
-<span><span class="co">##  3                  23.2              35.9         24.5              9.31               -0.0540</span></span>
-<span><span class="co">##  4                  21.8              76.1         21.8             13.2                 0.0731</span></span>
-<span><span class="co">##  5                  20.7              47.3         22.0             11                   0.763 </span></span>
-<span><span class="co">##  6                  21.3              32.5         19.2             13.0                 0.422 </span></span>
-<span><span class="co">##  7                  22                36.9         19.2             10.8                 0.113 </span></span>
-<span><span class="co">##  8                  21.2              61.5         15.9              8.57               -0.154 </span></span>
-<span><span class="co">##  9                  22.7              67.2         15.7             17.8                -0.320 </span></span>
-<span><span class="co">## 10                  20.6             254.          11.3             12.7                 0.457 </span></span>
-<span><span class="co">## # ℹ 1,062 more rows</span></span>
-<span><span class="co">## # ℹ 7 more variables: Beer &lt;dbl&gt;, MentalHealthPati &lt;dbl&gt;, NatureParks &lt;dbl&gt;, Casinos &lt;dbl&gt;,</span></span>
-<span><span class="co">## #   DrinkingPlaces &lt;dbl&gt;, X.HouseRent &lt;dbl&gt;, geometry &lt;POINT [°]&gt;</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">ndvi</span> <span class="op">=</span> <span class="fu">gdverse</span><span class="fu">::</span><span class="va"><a href="https://stscl.github.io/gdverse/reference/ndvi.html" class="external-link">ndvi</a></span></span>
+<span><span class="va">ndvi</span></span>
+<span><span class="co">## # A tibble: 713 × 7</span></span>
+<span><span class="co">##    NDVIchange Climatezone Mining Tempchange Precipitation    GDP Popdensity</span></span>
+<span><span class="co">##         &lt;dbl&gt; &lt;chr&gt;       &lt;fct&gt;       &lt;dbl&gt;         &lt;dbl&gt;  &lt;dbl&gt;      &lt;dbl&gt;</span></span>
+<span><span class="co">##  1    0.116   Bwk         low         0.256          237.  12.6      1.45  </span></span>
+<span><span class="co">##  2    0.0178  Bwk         low         0.273          214.   2.69     0.801 </span></span>
+<span><span class="co">##  3    0.138   Bsk         low         0.302          449.  20.1     11.5   </span></span>
+<span><span class="co">##  4    0.00439 Bwk         low         0.383          213.   0        0.0462</span></span>
+<span><span class="co">##  5    0.00316 Bwk         low         0.357          205.   0        0.0748</span></span>
+<span><span class="co">##  6    0.00838 Bwk         low         0.338          201.   0        0.549 </span></span>
+<span><span class="co">##  7    0.0335  Bwk         low         0.296          210.  11.9      1.63  </span></span>
+<span><span class="co">##  8    0.0387  Bwk         low         0.230          236.  30.2      4.99  </span></span>
+<span><span class="co">##  9    0.0882  Bsk         low         0.214          342. 241       20.0   </span></span>
+<span><span class="co">## 10    0.0690  Bsk         low         0.245          379.  42.0      7.50  </span></span>
+<span><span class="co">## # ℹ 703 more rows</span></span>
+<span><span class="va">ndvi</span> <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">ndvi</span>,<span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">Climatezone</span>,<span class="va">Mining</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">ndvi</span></span>
+<span><span class="co">## # A tibble: 713 × 5</span></span>
+<span><span class="co">##    NDVIchange Tempchange Precipitation    GDP Popdensity</span></span>
+<span><span class="co">##         &lt;dbl&gt;      &lt;dbl&gt;         &lt;dbl&gt;  &lt;dbl&gt;      &lt;dbl&gt;</span></span>
+<span><span class="co">##  1    0.116        0.256          237.  12.6      1.45  </span></span>
+<span><span class="co">##  2    0.0178       0.273          214.   2.69     0.801 </span></span>
+<span><span class="co">##  3    0.138        0.302          449.  20.1     11.5   </span></span>
+<span><span class="co">##  4    0.00439      0.383          213.   0        0.0462</span></span>
+<span><span class="co">##  5    0.00316      0.357          205.   0        0.0748</span></span>
+<span><span class="co">##  6    0.00838      0.338          201.   0        0.549 </span></span>
+<span><span class="co">##  7    0.0335       0.296          210.  11.9      1.63  </span></span>
+<span><span class="co">##  8    0.0387       0.230          236.  30.2      4.99  </span></span>
+<span><span class="co">##  9    0.0882       0.214          342. 241       20.0   </span></span>
+<span><span class="co">## 10    0.0690       0.245          379.  42.0      7.50  </span></span>
+<span><span class="co">## # ℹ 703 more rows</span></span></code></pre></div>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="op">{</span></span>
-<span>  <span class="va">g</span> <span class="op">=</span> <span class="fu">cisp</span><span class="fu">::</span><span class="fu"><a href="../reference/spc.html">spc</a></span><span class="op">(</span><span class="va">depression</span>,cores <span class="op">=</span> <span class="fl">12</span><span class="op">)</span></span>
+<span>  <span class="va">g</span> <span class="op">=</span> <span class="fu">cisp</span><span class="fu">::</span><span class="fu"><a href="../reference/spc.html">spc</a></span><span class="op">(</span><span class="va">ndvi</span>,cores <span class="op">=</span> <span class="fl">6</span><span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span></span>
 <span><span class="co">##    user  system elapsed </span></span>
-<span><span class="co">##    6.07    0.86 2018.65</span></span>
+<span><span class="co">##    1.14    0.30   23.16</span></span>
 <span><span class="va">g</span></span>
 <span><span class="co">## ***   Spatial Pattern Correlation    </span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">## |          xv           |          yv           | correlation |</span></span>
-<span><span class="co">## |:---------------------:|:---------------------:|:-----------:|</span></span>
-<span><span class="co">## |   PopulationDensity   | Depression_prevelence |   0.04614   |</span></span>
-<span><span class="co">## |     Population65      | Depression_prevelence |   0.04150   |</span></span>
-<span><span class="co">## | Neighbor_Disadvantage | Depression_prevelence |   0.03924   |</span></span>
-<span><span class="co">## |    DrinkingPlaces     | Depression_prevelence |   0.01485   |</span></span>
-<span><span class="co">## |   NoHealthInsurance   | Depression_prevelence |   0.01384   |</span></span>
-<span><span class="co">## |      NatureParks      | Depression_prevelence |   0.01239   |</span></span>
-<span><span class="co">## |   MentalHealthPati    | Depression_prevelence |   0.01042   |</span></span>
-<span><span class="co">## |      X.HouseRent      | Depression_prevelence |   0.00777   |</span></span>
-<span><span class="co">## |         Beer          | Depression_prevelence |   0.00191   |</span></span>
-<span><span class="co">## |        Casinos        | Depression_prevelence |  -0.00708   |</span></span>
-<span><span class="co">## |      X.HouseRent      |   PopulationDensity   |   0.07832   |</span></span>
-<span><span class="co">## |   MentalHealthPati    |   PopulationDensity   |   0.01587   |</span></span>
-<span><span class="co">## |    DrinkingPlaces     |   PopulationDensity   |   0.01484   |</span></span>
-<span><span class="co">## |     Population65      |   PopulationDensity   |   0.01037   |</span></span>
-<span><span class="co">## |   NoHealthInsurance   |   PopulationDensity   |   0.00619   |</span></span>
-<span><span class="co">## |      NatureParks      |   PopulationDensity   |   0.00528   |</span></span>
-<span><span class="co">## |         Beer          |   PopulationDensity   |   0.00115   |</span></span>
-<span><span class="co">## |        Casinos        |   PopulationDensity   |   0.00108   |</span></span>
-<span><span class="co">## | Neighbor_Disadvantage |   PopulationDensity   |  -0.00529   |</span></span>
-<span><span class="co">## | Depression_prevelence |   PopulationDensity   |  -0.07737   |</span></span>
-<span><span class="co">## |      X.HouseRent      |     Population65      |   0.08942   |</span></span>
-<span><span class="co">## | Neighbor_Disadvantage |     Population65      |   0.04196   |</span></span>
-<span><span class="co">## |   PopulationDensity   |     Population65      |   0.02396   |</span></span>
-<span><span class="co">## | Depression_prevelence |     Population65      |   0.02231   |</span></span>
-<span><span class="co">## |   MentalHealthPati    |     Population65      |   0.00562   |</span></span>
-<span><span class="co">## |    DrinkingPlaces     |     Population65      |   0.00349   |</span></span>
-<span><span class="co">## |   NoHealthInsurance   |     Population65      |   0.00346   |</span></span>
-<span><span class="co">## |         Beer          |     Population65      |  -0.00529   |</span></span>
-<span><span class="co">## |      NatureParks      |     Population65      |  -0.00766   |</span></span>
-<span><span class="co">## |        Casinos        |     Population65      |  -0.00976   |</span></span>
-<span><span class="co">## | Neighbor_Disadvantage |   NoHealthInsurance   |   0.11050   |</span></span>
-<span><span class="co">## |      X.HouseRent      |   NoHealthInsurance   |   0.06270   |</span></span>
-<span><span class="co">## |     Population65      |   NoHealthInsurance   |   0.02928   |</span></span>
-<span><span class="co">## |   PopulationDensity   |   NoHealthInsurance   |   0.02298   |</span></span>
-<span><span class="co">## |    DrinkingPlaces     |   NoHealthInsurance   |   0.01302   |</span></span>
-<span><span class="co">## |        Casinos        |   NoHealthInsurance   |   0.00775   |</span></span>
-<span><span class="co">## |   MentalHealthPati    |   NoHealthInsurance   |   0.00657   |</span></span>
-<span><span class="co">## |         Beer          |   NoHealthInsurance   |   0.00434   |</span></span>
-<span><span class="co">## |      NatureParks      |   NoHealthInsurance   |   0.00197   |</span></span>
-<span><span class="co">## | Depression_prevelence |   NoHealthInsurance   |  -0.00779   |</span></span>
-<span><span class="co">## |    DrinkingPlaces     | Neighbor_Disadvantage |   0.09369   |</span></span>
-<span><span class="co">## |   NoHealthInsurance   | Neighbor_Disadvantage |   0.06840   |</span></span>
-<span><span class="co">## |      X.HouseRent      | Neighbor_Disadvantage |   0.06004   |</span></span>
-<span><span class="co">## |      NatureParks      | Neighbor_Disadvantage |   0.01924   |</span></span>
-<span><span class="co">## |     Population65      | Neighbor_Disadvantage |   0.01867   |</span></span>
-<span><span class="co">## |   MentalHealthPati    | Neighbor_Disadvantage |   0.01157   |</span></span>
-<span><span class="co">## |        Casinos        | Neighbor_Disadvantage |   0.00541   |</span></span>
-<span><span class="co">## |   PopulationDensity   | Neighbor_Disadvantage |  -0.00357   |</span></span>
-<span><span class="co">## | Depression_prevelence | Neighbor_Disadvantage |  -0.00665   |</span></span>
-<span><span class="co">## |         Beer          | Neighbor_Disadvantage |  -0.00989   |</span></span>
-<span><span class="co">## |        Casinos        |         Beer          |   0.04989   |</span></span>
-<span><span class="co">## |     Population65      |         Beer          |   0.01780   |</span></span>
-<span><span class="co">## |    DrinkingPlaces     |         Beer          |   0.01469   |</span></span>
-<span><span class="co">## |      NatureParks      |         Beer          |   0.01295   |</span></span>
-<span><span class="co">## | Neighbor_Disadvantage |         Beer          |   0.00331   |</span></span>
-<span><span class="co">## |   PopulationDensity   |         Beer          |   0.00211   |</span></span>
-<span><span class="co">## |   MentalHealthPati    |         Beer          |   0.00161   |</span></span>
-<span><span class="co">## |      X.HouseRent      |         Beer          |  -0.00016   |</span></span>
-<span><span class="co">## |   NoHealthInsurance   |         Beer          |  -0.00306   |</span></span>
-<span><span class="co">## | Depression_prevelence |         Beer          |  -0.03499   |</span></span>
-<span><span class="co">## |    DrinkingPlaces     |   MentalHealthPati    |   0.07590   |</span></span>
-<span><span class="co">## |   PopulationDensity   |   MentalHealthPati    |   0.03785   |</span></span>
-<span><span class="co">## |      NatureParks      |   MentalHealthPati    |   0.03208   |</span></span>
-<span><span class="co">## | Neighbor_Disadvantage |   MentalHealthPati    |   0.02471   |</span></span>
-<span><span class="co">## |        Casinos        |   MentalHealthPati    |   0.02460   |</span></span>
-<span><span class="co">## |         Beer          |   MentalHealthPati    |   0.01057   |</span></span>
-<span><span class="co">## |     Population65      |   MentalHealthPati    |   0.00982   |</span></span>
-<span><span class="co">## |      X.HouseRent      |   MentalHealthPati    |   0.00799   |</span></span>
-<span><span class="co">## | Depression_prevelence |   MentalHealthPati    |  -0.01049   |</span></span>
-<span><span class="co">## |   NoHealthInsurance   |   MentalHealthPati    |  -0.01681   |</span></span>
-<span><span class="co">## |    DrinkingPlaces     |      NatureParks      |   0.07349   |</span></span>
-<span><span class="co">## |   MentalHealthPati    |      NatureParks      |   0.03486   |</span></span>
-<span><span class="co">## |      X.HouseRent      |      NatureParks      |   0.02807   |</span></span>
-<span><span class="co">## | Neighbor_Disadvantage |      NatureParks      |   0.02704   |</span></span>
-<span><span class="co">## |   PopulationDensity   |      NatureParks      |   0.01846   |</span></span>
-<span><span class="co">## |   NoHealthInsurance   |      NatureParks      |   0.01689   |</span></span>
-<span><span class="co">## |         Beer          |      NatureParks      |   0.01029   |</span></span>
-<span><span class="co">## |        Casinos        |      NatureParks      |   0.00842   |</span></span>
-<span><span class="co">## |     Population65      |      NatureParks      |  -0.01961   |</span></span>
-<span><span class="co">## | Depression_prevelence |      NatureParks      |  -0.06237   |</span></span>
-<span><span class="co">## |    DrinkingPlaces     |        Casinos        |   0.05319   |</span></span>
-<span><span class="co">## |     Population65      |        Casinos        |   0.03494   |</span></span>
-<span><span class="co">## |         Beer          |        Casinos        |   0.02488   |</span></span>
-<span><span class="co">## |      NatureParks      |        Casinos        |   0.01989   |</span></span>
-<span><span class="co">## |   MentalHealthPati    |        Casinos        |   0.01854   |</span></span>
-<span><span class="co">## | Neighbor_Disadvantage |        Casinos        |   0.00293   |</span></span>
-<span><span class="co">## |   NoHealthInsurance   |        Casinos        |   0.00009   |</span></span>
-<span><span class="co">## |   PopulationDensity   |        Casinos        |  -0.00207   |</span></span>
-<span><span class="co">## |      X.HouseRent      |        Casinos        |  -0.00864   |</span></span>
-<span><span class="co">## | Depression_prevelence |        Casinos        |  -0.01344   |</span></span>
-<span><span class="co">## |      NatureParks      |    DrinkingPlaces     |   0.10000   |</span></span>
-<span><span class="co">## |   MentalHealthPati    |    DrinkingPlaces     |   0.04482   |</span></span>
-<span><span class="co">## |   PopulationDensity   |    DrinkingPlaces     |   0.03366   |</span></span>
-<span><span class="co">## |        Casinos        |    DrinkingPlaces     |   0.02222   |</span></span>
-<span><span class="co">## |         Beer          |    DrinkingPlaces     |   0.01330   |</span></span>
-<span><span class="co">## |   NoHealthInsurance   |    DrinkingPlaces     |   0.00258   |</span></span>
-<span><span class="co">## |      X.HouseRent      |    DrinkingPlaces     |   0.00185   |</span></span>
-<span><span class="co">## | Neighbor_Disadvantage |    DrinkingPlaces     |  -0.00400   |</span></span>
-<span><span class="co">## | Depression_prevelence |    DrinkingPlaces     |  -0.01162   |</span></span>
-<span><span class="co">## |     Population65      |    DrinkingPlaces     |  -0.03072   |</span></span>
-<span><span class="co">## |   PopulationDensity   |      X.HouseRent      |   0.12494   |</span></span>
-<span><span class="co">## | Neighbor_Disadvantage |      X.HouseRent      |   0.08995   |</span></span>
-<span><span class="co">## |     Population65      |      X.HouseRent      |   0.04227   |</span></span>
-<span><span class="co">## |   NoHealthInsurance   |      X.HouseRent      |   0.01481   |</span></span>
-<span><span class="co">## |    DrinkingPlaces     |      X.HouseRent      |   0.00667   |</span></span>
-<span><span class="co">## |   MentalHealthPati    |      X.HouseRent      |  -0.00175   |</span></span>
-<span><span class="co">## |        Casinos        |      X.HouseRent      |  -0.00581   |</span></span>
-<span><span class="co">## | Depression_prevelence |      X.HouseRent      |  -0.00587   |</span></span>
-<span><span class="co">## |         Beer          |      X.HouseRent      |  -0.00692   |</span></span>
-<span><span class="co">## |      NatureParks      |      X.HouseRent      |  -0.01047   |</span></span></code></pre></div>
+<span><span class="co">## |      xv       |      yv       | correlation |</span></span>
+<span><span class="co">## |:-------------:|:-------------:|:-----------:|</span></span>
+<span><span class="co">## | Precipitation |  NDVIchange   |   0.39517   |</span></span>
+<span><span class="co">## |  Tempchange   |  NDVIchange   |   0.01905   |</span></span>
+<span><span class="co">## |  Popdensity   |  NDVIchange   |   0.00483   |</span></span>
+<span><span class="co">## |      GDP      |  NDVIchange   |  -0.02158   |</span></span>
+<span><span class="co">## | Precipitation |  Tempchange   |   0.07679   |</span></span>
+<span><span class="co">## |  NDVIchange   |  Tempchange   |   0.04977   |</span></span>
+<span><span class="co">## |  Popdensity   |  Tempchange   |   0.01516   |</span></span>
+<span><span class="co">## |      GDP      |  Tempchange   |  -0.01466   |</span></span>
+<span><span class="co">## |  NDVIchange   | Precipitation |   0.35303   |</span></span>
+<span><span class="co">## |  Popdensity   | Precipitation |   0.01140   |</span></span>
+<span><span class="co">## |  Tempchange   | Precipitation |  -0.00265   |</span></span>
+<span><span class="co">## |      GDP      | Precipitation |  -0.02745   |</span></span>
+<span><span class="co">## |  Popdensity   |      GDP      |   0.29824   |</span></span>
+<span><span class="co">## |  Tempchange   |      GDP      |   0.09282   |</span></span>
+<span><span class="co">## |  NDVIchange   |      GDP      |   0.08061   |</span></span>
+<span><span class="co">## | Precipitation |      GDP      |   0.04213   |</span></span>
+<span><span class="co">## |      GDP      |  Popdensity   |   0.15481   |</span></span>
+<span><span class="co">## |  Tempchange   |  Popdensity   |   0.04483   |</span></span>
+<span><span class="co">## |  NDVIchange   |  Popdensity   |   0.00442   |</span></span>
+<span><span class="co">## | Precipitation |  Popdensity   |  -0.07190   |</span></span></code></pre></div>
 <p>The results are visualized in a default network graph style:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span></span></code></pre></div>
