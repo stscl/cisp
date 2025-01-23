@@ -42,5 +42,6 @@ sim1
 \donttest{
 g = spc(sim1, discnum = 3:6, cores = 1)
 g
+plot(g,"matrix")
 }
 }

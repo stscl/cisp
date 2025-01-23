@@ -22,6 +22,7 @@
 #' \donttest{
 #' g = spc(sim1, discnum = 3:6, cores = 1)
 #' g
+#' plot(g,"matrix")
 #' }
 spc = \(data, overlay = 'and', discnum = 3:8,
         discmethod = c("sd","equal","geometric","quantile","natural"),
@@ -61,7 +62,6 @@ spc = \(data, overlay = 'and', discnum = 3:8,
 #' @title print spc result
 #' @export
 #' @noRd
-#'
 print.spc_result = \(x, ...) {
   cat("***   Spatial Pattern Correlation    ")
   print(knitr::kable(x$cor_tbl, format = "markdown", digits = 5, align = 'c', ...))
@@ -70,7 +70,6 @@ print.spc_result = \(x, ...) {
 #' @title plot spc result
 #' @export
 #' @noRd
-#'
 plot.spc_result = \(x, style = c("network","matrix"), ...) {
   style = match.arg(style)
   switch(style,

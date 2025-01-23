@@ -4,8 +4,8 @@
 #' @param data A `data.frame`, `tibble` or `sf` object of observation data.
 #' @param overlay (optional) Spatial overlay method. One of `and`, `or`, `intersection`.
 #' Default is `and`.
-#' @param cores (optional) Positive integer (default is 1). When cores are greater than 1, use
-#' multi-core parallel computing.
+#' @param cores (optional) Positive integer (default is 1). When cores are greater than 1,
+#' use parallel computing.
 #'
 #' @return A list.
 #' \describe{
@@ -166,7 +166,6 @@ ssh_marginalcontri = \(formula, data, overlay = 'and', cores = 1){
 #' @title print ssh_marginalcontri result
 #' @export
 #' @noRd
-#'
 print.sshmc_result = \(x, ...) {
   cat("***   SSH Marginal Contributions    ")
   print(knitr::kable(x$spd, format = "markdown", digits = 12, align = 'c', ...))
@@ -175,7 +174,6 @@ print.sshmc_result = \(x, ...) {
 #' @title plot ssh_marginalcontri result
 #' @export
 #' @noRd
-#'
 plot.sshmc_result = \(x, low_color = "#6600CC",
                       high_color = "#FFCC33", ...){
   g = x$determination

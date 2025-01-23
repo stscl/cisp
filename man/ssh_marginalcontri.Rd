@@ -14,8 +14,8 @@ ssh_marginalcontri(formula, data, overlay = "and", cores = 1)
 \item{overlay}{(optional) Spatial overlay method. One of \code{and}, \code{or}, \code{intersection}.
 Default is \code{and}.}
 
-\item{cores}{(optional) Positive integer (default is 1). When cores are greater than 1, use
-multi-core parallel computing.}
+\item{cores}{(optional) Positive integer (default is 1). When cores are greater than 1,
+use parallel computing.}
 }
 \value{
 A list.
