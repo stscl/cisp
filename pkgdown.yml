@@ -3,7 +3,7 @@ pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
   cisp: cisp.html
-last_built: 2025-01-23T08:45Z
+last_built: 2025-01-23T09:26Z
 urls:
   reference: https://stscl.github.io/cisp/reference
   article: https://stscl.github.io/cisp/articles
