@@ -3,50 +3,48 @@
 #' @param data A `data.frame`, `tibble` or `sf` object of observation data.
 #' @param overlay (optional) Spatial overlay method. One of `and`, `or`, `intersection`.
 #' Default is `and`.
-#' @param discnum A numeric vector of discretized classes of columns that need to be discretized.
-#' Default all `discvar` use `3:8`.
-#' @param minsize (optional) The min size of each discretization group. Default all use `1`.
-#' @param strategy (optional) Optimal discretization strategy. When `strategy` is `1L`, choose the highest
-#' q-statistics to determinate optimal spatial data discretization parameters. When `strategy` is `2L`,
-#' The optimal discrete parameters of spatial data are selected by combining LOESS model.
-#' @param increase_rate (optional) The critical increase rate of the number of discretization. Default is `5%`.
-#' @param cores (optional) Positive integer (default is 1). When cores are greater than 1, use
-#' multi-core parallel computing.
+#' @param discnum (optional) A vector of number of classes for discretization. Default is `3:8`.
+#' @param discmethod (optional) A vector of methods for discretization, default is using
+#' `c("sd","equal","geometric","quantile","natural")` by invoking `sdsfun`.
+#' @param cores (optional) Positive integer (default is 1). When cores are greater than 1,
+#' use parallel computing.
 #'
 #' @return A list.
 #' \describe{
-#' \item{\code{correlation_tbl}}{A tibble with power of spatial pattern correlation}
-#' \item{\code{correlation_mat}}{A matrix with power of spatial pattern correlation}
+#' \item{\code{cor_tbl}}{A tibble with power of spatial pattern correlation}
+#' \item{\code{cor_mat}}{A matrix with power of spatial pattern correlation}
 #' }
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#' ## The following code needs to configure the Python environment to run:
 #' sim1 = sf::st_as_sf(gdverse::sim,coords = c('lo','la'))
+#' sim1
+#' \donttest{
 #' g = spc(sim1, discnum = 3:6, cores = 1)
 #' g
+#' plot(g,"matrix")
 #' }
-#'
-spc = \(data, overlay = 'and', discnum = 3:8, minsize = 1,
-        strategy = 2L, increase_rate = 0.05, cores = 1){
+spc = \(data, overlay = 'and', discnum = 3:8,
+        discmethod = c("sd","equal","geometric","quantile","natural"),
+        cores = 1){
   if (inherits(data,'sf')) {
     data = sf::st_drop_geometry(data)
   }
   xsname = names(data)
-  calcul_spcv = \(yname,data,overlay,discnum,minsize,strategy,increase_rate,cores){
-    rgd_res = gdverse::rgd(paste0(yname," ~ ."), data = data, discnum = discnum,
-                           minsize = minsize, strategy = strategy,
-                           increase_rate = increase_rate, cores = cores)
-    dti = dplyr::bind_cols(dplyr::select(data,dplyr::all_of(yname)),rgd_res$opt_disc)
+  calcul_spcv = \(yname,data,overlay,discn,discm,cores){
+    opgd_res = gdverse::gd_optunidisc(
+      paste0(yname," ~ ."), data = data, discnum = discn,
+      discmethod = discm, cores = cores
+    )
+    dti = dplyr::bind_cols(dplyr::select(data,dplyr::all_of(yname)),opgd_res$disc)
     sshmcv = cisp::ssh_marginalcontri(paste0(yname," ~ ."), data = dti,
                                       overlay = overlay, cores = cores)
     return(sshmcv$spd)
   }
   res = purrr::map_dfr(xsname,
-                       \(.x) calcul_spcv(.x,data = data,overlay = overlay,
-                              discnum = discnum,minsize = minsize,strategy = strategy,
-                              increase_rate = increase_rate, cores = cores) |>
+                       \(.x) calcul_spcv(.x, data = data, overlay = overlay,
+                                         discn = discnum, discm = discmethod,
+                                         cores = cores) |>
                      dplyr::mutate(yv = .x) |>
                      dplyr::rename(xv = variable,
                                    correlation = spd) |>
@@ -56,7 +54,7 @@ spc = \(data, overlay = 'and', discnum = 3:8, minsize = 1,
     tibble::column_to_rownames(var = 'xv') |>
     as.matrix()
   res_mat[is.na(res_mat)] = 1
-  res = list("correlation_tbl" = res,"correlation_mat" = res_mat)
+  res = list("cor_tbl" = res,"cor_mat" = res_mat)
   class(res) = 'spc_result'
   return(res)
 }
@@ -64,21 +62,19 @@ spc = \(data, overlay = 'and', discnum = 3:8, minsize = 1,
 #' @title print spc result
 #' @export
 #' @noRd
-#'
 print.spc_result = \(x, ...) {
   cat("***   Spatial Pattern Correlation    ")
-  print(knitr::kable(x$correlation_tbl, format = "markdown", digits = 5, align = 'c', ...))
+  print(knitr::kable(x$cor_tbl, format = "markdown", digits = 5, align = 'c', ...))
 }
 
 #' @title plot spc result
 #' @export
 #' @noRd
-#'
 plot.spc_result = \(x, style = c("network","matrix"), ...) {
   style = match.arg(style)
   switch(style,
          "network" = {
-           g = igraph::graph_from_data_frame(x$correlation_tbl, directed = TRUE)
+           g = igraph::graph_from_data_frame(x$cor_tbl, directed = TRUE)
            fig_g = ggraph::ggraph(g, layout = "circle") +
              ggraph::geom_edge_arc(ggplot2::aes(width = abs(correlation), color = correlation),
                                    arrow = grid::arrow(type = "closed", length = grid::unit(3, "mm")),
@@ -99,7 +95,7 @@ plot.spc_result = \(x, style = c("network","matrix"), ...) {
              ggplot2::labs(edge_color = "Strength")
          },
          "matrix" = {
-           g = x$correlation_tbl
+           g = x$cor_tbl
            fig_g = ggplot2::ggplot(data = g,
                                    ggplot2::aes(x = yv, y = xv, fill = correlation)) +
              ggplot2::geom_tile(color = "white") +

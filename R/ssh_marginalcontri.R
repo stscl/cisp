@@ -4,8 +4,8 @@
 #' @param data A `data.frame`, `tibble` or `sf` object of observation data.
 #' @param overlay (optional) Spatial overlay method. One of `and`, `or`, `intersection`.
 #' Default is `and`.
-#' @param cores (optional) Positive integer (default is 1). When cores are greater than 1, use
-#' multi-core parallel computing.
+#' @param cores (optional) Positive integer (default is 1). When cores are greater than 1,
+#' use parallel computing.
 #'
 #' @return A list.
 #' \describe{
@@ -19,6 +19,7 @@
 #' NTDs1 = sf::st_as_sf(gdverse::NTDs, coords = c('X','Y'))
 #' g = ssh_marginalcontri(incidence ~ ., data = NTDs1, cores = 1)
 #' g
+#' plot(g)
 #'
 ssh_marginalcontri = \(formula, data, overlay = 'and', cores = 1){
   formula = stats::as.formula(formula)
@@ -64,12 +65,12 @@ ssh_marginalcontri = \(formula, data, overlay = 'and', cores = 1){
   doclust = FALSE
   if (cores > 1) {
     doclust = TRUE
-    cores = parallel::makeCluster(cores)
-    on.exit(parallel::stopCluster(cores), add=TRUE)
+    cl = parallel::makeCluster(cores)
+    on.exit(parallel::stopCluster(cl), add=TRUE)
   }
 
   if (doclust) {
-    out_pdv = parallel::parLapply(cores, xs, calcul_pd,
+    out_pdv = parallel::parLapply(cl, xs, calcul_pd,
                                   dti = data, overlay = overlay)
     out_pdv = tibble::as_tibble(do.call(rbind, out_pdv))
   } else {
@@ -110,7 +111,7 @@ ssh_marginalcontri = \(formula, data, overlay = 'and', cores = 1){
   }
 
   if (doclust) {
-    out_g = parallel::parLapply(cores,xname,calcul_shap)
+    out_g = parallel::parLapply(cl,xname,calcul_shap)
     out_g = tibble::as_tibble(do.call(rbind, out_g))
   } else {
     out_g = purrr::map_dfr(xname,calcul_shap)
@@ -166,7 +167,6 @@ ssh_marginalcontri = \(formula, data, overlay = 'and', cores = 1){
 #' @title print ssh_marginalcontri result
 #' @export
 #' @noRd
-#'
 print.sshmc_result = \(x, ...) {
   cat("***   SSH Marginal Contributions    ")
   print(knitr::kable(x$spd, format = "markdown", digits = 12, align = 'c', ...))
@@ -175,7 +175,6 @@ print.sshmc_result = \(x, ...) {
 #' @title plot ssh_marginalcontri result
 #' @export
 #' @noRd
-#'
 plot.sshmc_result = \(x, low_color = "#6600CC",
                       high_color = "#FFCC33", ...){
   g = x$determination

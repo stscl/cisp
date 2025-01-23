@@ -8,9 +8,7 @@ spc(
   data,
   overlay = "and",
   discnum = 3:8,
-  minsize = 1,
-  strategy = 2L,
-  increase_rate = 0.05,
+  discmethod = c("sd", "equal", "geometric", "quantile", "natural"),
   cores = 1
 )
 }
@@ -20,36 +18,30 @@ spc(
 \item{overlay}{(optional) Spatial overlay method. One of \code{and}, \code{or}, \code{intersection}.
 Default is \code{and}.}
 
-\item{discnum}{A numeric vector of discretized classes of columns that need to be discretized.
-Default all \code{discvar} use \code{3:8}.}
+\item{discnum}{(optional) A vector of number of classes for discretization. Default is \code{3:8}.}
 
-\item{minsize}{(optional) The min size of each discretization group. Default all use \code{1}.}
+\item{discmethod}{(optional) A vector of methods for discretization, default is using
+\code{c("sd","equal","geometric","quantile","natural")} by invoking \code{sdsfun}.}
 
-\item{strategy}{(optional) Optimal discretization strategy. When \code{strategy} is \code{1L}, choose the highest
-q-statistics to determinate optimal spatial data discretization parameters. When \code{strategy} is \code{2L},
-The optimal discrete parameters of spatial data are selected by combining LOESS model.}
-
-\item{increase_rate}{(optional) The critical increase rate of the number of discretization. Default is \verb{5\%}.}
-
-\item{cores}{(optional) Positive integer (default is 1). When cores are greater than 1, use
-multi-core parallel computing.}
+\item{cores}{(optional) Positive integer (default is 1). When cores are greater than 1,
+use parallel computing.}
 }
 \value{
 A list.
 \describe{
-\item{\code{correlation_tbl}}{A tibble with power of spatial pattern correlation}
-\item{\code{correlation_mat}}{A matrix with power of spatial pattern correlation}
+\item{\code{cor_tbl}}{A tibble with power of spatial pattern correlation}
+\item{\code{cor_mat}}{A matrix with power of spatial pattern correlation}
 }
 }
 \description{
 spatial pattern correlation
 }
 \examples{
-\dontrun{
-## The following code needs to configure the Python environment to run:
 sim1 = sf::st_as_sf(gdverse::sim,coords = c('lo','la'))
+sim1
+\donttest{
 g = spc(sim1, discnum = 3:6, cores = 1)
 g
+plot(g,"matrix")
 }
-
 }
