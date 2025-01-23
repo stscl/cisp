@@ -19,6 +19,7 @@
 #' NTDs1 = sf::st_as_sf(gdverse::NTDs, coords = c('X','Y'))
 #' g = ssh_marginalcontri(incidence ~ ., data = NTDs1, cores = 1)
 #' g
+#' plot(g)
 #'
 ssh_marginalcontri = \(formula, data, overlay = 'and', cores = 1){
   formula = stats::as.formula(formula)
