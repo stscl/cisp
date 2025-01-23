@@ -42,4 +42,6 @@ Imports:
 Suggests: 
     knitr,
     rmarkdown
+Remotes:
+    stscl/sdsfun
 VignetteBuilder: knitr
