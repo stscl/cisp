@@ -27,7 +27,7 @@ Description: Use the spatial association marginal contributions derived from spa
 License: GPL-3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 URL: https://stscl.github.io/cisp/, https://github.com/stscl/cisp
 BugReports: https://github.com/stscl/cisp/issues
 Depends: 
@@ -35,7 +35,7 @@ Depends:
 Imports: 
     dplyr,
     forcats,
-    gdverse (>= 1.3-2),
+    gdverse (>= 1.5),
     ggplot2,
     ggraph,
     igraph,
@@ -48,7 +48,8 @@ Imports:
     tidyr
 Suggests: 
     knitr,
-    rmarkdown
+    rmarkdown,
+    spEDM
 Remotes:
     stscl/gdverse
 VignetteBuilder: knitr
