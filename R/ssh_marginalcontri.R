@@ -9,7 +9,7 @@
 #'
 #' @return A list.
 #' \describe{
-#' \item{\code{pd}}{robust power of determinants}
+#' \item{\code{pd}}{power of determinants}
 #' \item{\code{spd}}{shap power of determinants}
 #' \item{\code{determination}}{determination of the optimal interaction of variables}
 #' }
