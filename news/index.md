@@ -4,6 +4,8 @@
 
 ## cisp 0.2.0
 
+CRAN release: 2026-02-07
+
 - Optimize `spc` with OPGD for efficiency and rename the results table
   ([\#13](https://github.com/stscl/cisp/issues/13)).
 
