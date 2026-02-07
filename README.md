@@ -13,7 +13,7 @@ Checks](https://badges.cranchecks.info/worst/cisp.svg)](https://cran.r-project.o
 [![DownloadsAll](https://badgen.net/cran/dt/cisp?color=orange)](https://CRAN.R-project.org/package=cisp)
 [![DownloadsMonth](https://cranlogs.r-pkg.org/badges/cisp)](https://CRAN.R-project.org/package=cisp)
 [![Lifecycle:
-stable](https://img.shields.io/badge/lifecycle-stable-516a54.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
+stable](https://img.shields.io/badge/lifecycle-stable-e1dbd1.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 [![R-universe](https://stscl.r-universe.dev/badges/cisp?color=cyan)](https://stscl.r-universe.dev/cisp)
 [![R-CMD-check](https://github.com/stscl/cisp/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/stscl/cisp/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
