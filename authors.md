@@ -21,7 +21,7 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/stscl/cisp/blob/main/inst/CITATION)
+[`inst/CITATION`](https://github.com/stscl/cisp/blob/v0.2.0/inst/CITATION)
 
 Lv W, Lei Y, Liu F, Yan J, Song Y, Zhao W (2025). “gdverse: An R Package
 for Spatial Stratified Heterogeneity Family.” *Transactions in GIS*,
