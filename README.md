@@ -5,11 +5,15 @@
 
 <!-- badges: start -->
 
-[![Lifecycle:
-stable](https://img.shields.io/badge/lifecycle-stable-cyan.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![CRAN](https://www.r-pkg.org/badges/version/cisp)](https://CRAN.R-project.org/package=cisp)
+[![CRAN
+Release](https://www.r-pkg.org/badges/last-release/cisp)](https://CRAN.R-project.org/package=cisp)
+[![CRAN
+Checks](https://badges.cranchecks.info/worst/cisp.svg)](https://cran.r-project.org/web/checks/check_results_cisp.html)
 [![DownloadsAll](https://badgen.net/cran/dt/cisp?color=orange)](https://CRAN.R-project.org/package=cisp)
 [![DownloadsMonth](https://cranlogs.r-pkg.org/badges/cisp)](https://CRAN.R-project.org/package=cisp)
+[![Lifecycle:
+stable](https://img.shields.io/badge/lifecycle-stable-36a85d.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 [![R-universe](https://stscl.r-universe.dev/badges/cisp?color=cyan)](https://stscl.r-universe.dev/cisp)
 [![R-CMD-check](https://github.com/stscl/cisp/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/stscl/cisp/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
