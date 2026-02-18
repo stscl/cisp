@@ -2,7 +2,7 @@
 
 ## Authors
 
-- **[Wenbo Lv](https://spatlyu.github.io/)**. Author, maintainer,
+- **[Wenbo Lyu](https://spatlyu.github.io/)**. Author, maintainer,
   copyright holder. [](https://orcid.org/0009-0002-6003-3800)
 
 - **[Yongze Song](https://yongzesong.com/)**. Author.
@@ -25,8 +25,7 @@ Source:
 
 Lv W, Lei Y, Liu F, Yan J, Song Y, Zhao W (2025). “gdverse: An R Package
 for Spatial Stratified Heterogeneity Family.” *Transactions in GIS*,
-**29**(2), 29:e70032.
-[doi:10.1111/tgis.70032](https://doi.org/10.1111/tgis.70032).
+**29**(2). [doi:10.1111/tgis.70032](https://doi.org/10.1111/tgis.70032).
 
     @Article{,
       title = {gdverse: An R Package for Spatial Stratified Heterogeneity Family},
@@ -35,6 +34,5 @@ for Spatial Stratified Heterogeneity Family.” *Transactions in GIS*,
       year = {2025},
       volume = {29},
       number = {2},
-      pages = {29:e70032},
       doi = {10.1111/tgis.70032},
     }
