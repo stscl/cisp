@@ -41,10 +41,10 @@ ssh_marginalcontri = \(formula, data, overlay = 'and', cores = 1){
   pd_mc = \(formula, discdata, overlaymethod = 'and'){
     formula = stats::as.formula(formula)
     formulavars = all.vars(formula)
-    if (formula.vars[2] != "."){
+    if (formulavars[2] != "."){
       discdata = dplyr::select(discdata,dplyr::all_of(formulavars))
     }
-    yname = formula.vars[1]
+    yname = formulavars[1]
     if (overlaymethod == 'intersection'){
       fuzzyzone = discdata |>
         dplyr::select(-dplyr::any_of(yname)) |>
