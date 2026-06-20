@@ -3,10 +3,12 @@
 ## Install and load R packages
 
 ``` r
+
 install.packages("cisp", dep = TRUE)
 ```
 
 ``` r
+
 library(cisp)
 ```
 
@@ -18,6 +20,7 @@ vignette](https://stscl.github.io/gdverse/articles/opgd.html). Since the
 only continuous variables are retained in the data:
 
 ``` r
+
 ndvi = gdverse::ndvi
 ndvi
 ## # A tibble: 713 × 7
@@ -53,6 +56,7 @@ ndvi
 ```
 
 ``` r
+
 system.time({
   g = cisp::spc(ndvi,cores = 6)
 })
@@ -88,6 +92,7 @@ g
 The results are visualized in a default network graph style:
 
 ``` r
+
 plot(g)
 ```
 
@@ -100,6 +105,7 @@ But the results can also be plotted using the classic correlation
 coefficient matrix visualization style:
 
 ``` r
+
 plot(g,style = "matrix")
 ```
 
