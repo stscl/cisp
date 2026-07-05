@@ -35,7 +35,7 @@ Depends:
 Imports: 
     dplyr,
     forcats,
-    gdverse (>= 1.5),
+    gdverse (>= 1.6),
     ggplot2,
     ggraph,
     igraph,
@@ -49,5 +49,7 @@ Imports:
 Suggests: 
     knitr,
     rmarkdown,
-    spEDM
+    spEDM,
+    infoxtr,
+    pc
 VignetteBuilder: knitr
